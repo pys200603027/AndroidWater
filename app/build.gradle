@@ -19,10 +19,11 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation  dependencie.android.constraint
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation dependencie.android.constraint
     implementation dependencie.android.appcompat
     testImplementation dependencie.test.junit
     androidTestImplementation dependencie.test.runner
     androidTestImplementation dependencie.test.espresso
+    implementation project(':water')
 }

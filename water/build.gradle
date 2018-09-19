@@ -26,6 +26,11 @@ dependencies {
     testImplementation dependencie.test.junit
     androidTestImplementation dependencie.test.runner
     androidTestImplementation dependencie.test.espresso
+//  功能组件
     api dependencie.rxjava
     api dependencie.rxandroid
+    api dependencie.retrofit
+    implementation dependencie.retrofitGson
+    api dependencie.okhttp
+
 }
