@@ -1,15 +1,17 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion COMPILE_SDK_VERSION as int
+
     defaultConfig {
-        applicationId "water.android.io.androidwater"
         minSdkVersion MIN_SDK_VERSION as int
         targetSdkVersion TARGET_SDK_VERSION as int
         versionCode 1
         versionName "1.0"
+
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -20,9 +22,10 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation  dependencie.android.constraint
     implementation dependencie.android.appcompat
     testImplementation dependencie.test.junit
     androidTestImplementation dependencie.test.runner
     androidTestImplementation dependencie.test.espresso
+    api dependencie.rxjava
+    api dependencie.rxandroid
 }
