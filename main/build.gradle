@@ -3,7 +3,11 @@ apply plugin: 'java-library'
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation dependencie.rxjava
-    implementation dependencie.retrofit
+    implementation dependencie.retrofit.retrofit
+    implementation dependencie.retrofit.retrofitGson
+    implementation dependencie.retrofit.adapterRxJava
+    implementation dependencie.okhttp
+    implementation dependencie.okhttpLogger
 }
 
 sourceCompatibility = "1.8"

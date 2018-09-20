@@ -4,3 +4,4 @@
 集成了主流框架
 * rxJava & rxAndroid
 * retrofit & okHttp & Gson
+* utilCode 说明书：https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/README-CN.md

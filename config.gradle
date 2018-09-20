@@ -15,10 +15,17 @@ deps.test = test
 
 deps.rxjava = "io.reactivex.rxjava2:rxjava:2.2.2"
 deps.rxandroid = "io.reactivex.rxjava2:rxandroid:2.1.0"
-deps.retrofit = "com.squareup.retrofit2:retrofit:2.4.0"
-deps.retrofitGson = "com.squareup.retrofit2:converter-gson:2.4.0"
+
+def retrofit = [:]
+retrofit.retrofit = "com.squareup.retrofit2:retrofit:2.4.0"
+retrofit.retrofitGson = "com.squareup.retrofit2:converter-gson:2.4.0"
+retrofit.adapterRxJava = "com.squareup.retrofit2:adapter-rxjava2:2.4.0"
+deps.retrofit = retrofit
+
 deps.gson = "com.google.code.gson:gson:2.8.5"
 deps.okhttp = "com.squareup.okhttp3:okhttp:3.11.0"
+deps.okhttpLogger = "com.squareup.okhttp3:logging-interceptor:3.11.0"
+deps.utilcode = "com.blankj:utilcode:1.20.3"
 ext.dependencie = deps
 
 
