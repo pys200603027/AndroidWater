@@ -6,7 +6,6 @@ import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -17,9 +16,8 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
 import retrofit2.http.Query;
-import water.android.io.main.Log;
+import water.android.io.liquid.utils.Log;
 import water.android.io.main.bean.OneArticle;
 import water.android.io.main.bean.RestfulResponse;
 
@@ -104,6 +102,9 @@ public class TestHttp {
         });
     }
 
+    /**
+     * 每日一篇
+     */
     interface OneArticleService {
 
         @GET("article/today")
@@ -135,6 +136,9 @@ public class TestHttp {
                 });
     }
 
+    /**
+     * Android高清壁纸
+     */
     interface AndroidDeskTop {
 
         @GET("vertical/vertical")

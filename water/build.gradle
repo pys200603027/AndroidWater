@@ -21,18 +21,14 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation dependencie.android.appcompat
     testImplementation dependencie.test.junit
     androidTestImplementation dependencie.test.runner
     androidTestImplementation dependencie.test.espresso
-//  功能组件
-    api dependencie.rxjava
+    //  功能组件
     api dependencie.rxandroid
-    api dependencie.retrofit.retrofit
-    api dependencie.retrofit.retrofitGson
-    api dependencie.retrofit.adapterRxJava
-    api dependencie.okhttp
     api dependencie.utilcode
-
+    api dependencie.klog
+    api project(':liquid')
 }

@@ -4,8 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.webkit.WebView;
 
-import water.android.io.main.Log;
-import water.android.io.main.test.TestHttp;
+import com.socks.library.KLog;
+import water.android.io.liquid.utils.Log;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,11 +13,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.init(new Log.FlatformLog() {
+            @Override
+            public void d(String msg) {
+                KLog.d("123", msg);
+            }
+        });
 
         WebView webView = new WebView(this);
         String userAgentString = webView.getSettings().getUserAgentString();
-
-        Log.d(userAgentString);
 
 //        new TestHttp().testOneArticle();
     }

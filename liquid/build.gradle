@@ -1,0 +1,15 @@
+apply plugin: 'java-library'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api dependencie.rxjava
+    api dependencie.retrofit.retrofit
+    api dependencie.retrofit.retrofitGson
+    api dependencie.retrofit.adapterRxJava
+    api dependencie.okhttp
+    api dependencie.okhttpLogger
+
+}
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
