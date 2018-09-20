@@ -16,11 +16,9 @@ public class MyClass {
 
 //        new TestHttp().test3();
 
-//        new TestHttp().testOneArticle();
+        new TestHttp().testOneArticle();
 
 //        new TestHttp().testAndroidDeskTop();
-
-        new TestHttp().testAndroidDeskTop();
 
     }
 

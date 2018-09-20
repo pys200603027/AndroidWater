@@ -1,11 +1,16 @@
 package water.android.io.main.test;
 
+import java.io.IOException;
+
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -19,9 +24,27 @@ import water.android.io.main.bean.OneArticle;
 import water.android.io.main.bean.RestfulResponse;
 
 public class TestHttp {
+    /**
+     * Mozilla/5.0 (Linux; Android 7.0; HUAWEI GRA-CL00 Build/HUAWEIGRA-CL00) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/37.0.0.0 Mobile Safari/537.36
+     */
+    public final static String USER_AGENT = "Mozilla/5.0 (Linux; Android 7.0; HUAWEI GRA-CL00 Build/HUAWEIGRA-CL00) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/37.0.0.0 Mobile Safari/537.36";
 
-
+    /**
+     * @param baseURL
+     * @return
+     */
     private Retrofit getRetrofit(String baseURL) {
+        Interceptor httpHeaderInterceptor = new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request request = chain.request()
+                        .newBuilder()
+                        .removeHeader("User-Agent")
+                        .addHeader("User-Agent", USER_AGENT)
+                        .build();
+                return chain.proceed(request);
+            }
+        };
         //打印retrofit日志
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
@@ -32,6 +55,7 @@ public class TestHttp {
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
+                .addInterceptor(httpHeaderInterceptor)
                 .build();
         //配置
         Retrofit.Builder builder = new Retrofit.Builder();
@@ -89,7 +113,7 @@ public class TestHttp {
 
     public void testOneArticle() {
 
-        getRetrofit("").create(OneArticleService.class)
+        getRetrofit("https://interface.meiriyiwen.com/").create(OneArticleService.class)
                 .getOne(1)
                 .doOnSubscribe(new Consumer<Disposable>() {
                     @Override
@@ -97,7 +121,6 @@ public class TestHttp {
                         Log.d("loading...");
                     }
                 })
-                .subscribeOn(Schedulers.io())
                 .subscribe(new Consumer<RestfulResponse<OneArticle>>() {
                     @Override
                     public void accept(RestfulResponse<OneArticle> oneArticleRestfulResponse) throws Exception {
