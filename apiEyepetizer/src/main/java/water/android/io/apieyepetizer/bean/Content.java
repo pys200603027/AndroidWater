@@ -104,22 +104,11 @@ public class Content {
         public long latestReleaseTime;
         public int videoNum;
         public Object adTrack;
-        public FollowBean follow;
+        public Follow follow;
         public ShieldBean shield;
         public int approvedNotReadyVideoCount;
         public boolean ifPgc;
 
-        public static class FollowBean {
-            /**
-             * itemType : author
-             * itemId : 2170
-             * followed : false
-             */
-
-            public String itemType;
-            public int itemId;
-            public boolean followed;
-        }
 
         public static class ShieldBean {
             /**

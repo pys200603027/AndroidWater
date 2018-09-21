@@ -3,7 +3,7 @@ package water.android.io.apieyepetizer.service;
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.http.GET;
-import water.android.io.apieyepetizer.bean.Discovery;
+import water.android.io.apieyepetizer.bean.DiscoveryList;
 import water.android.io.apieyepetizer.bean.Selected;
 
 public interface EyepetizerService {
@@ -22,7 +22,7 @@ public interface EyepetizerService {
      * @return
      */
     @GET("discovery")
-    Observable<Discovery> getDiscovery();
+    Observable<DiscoveryList> getDiscovery();
 
     /**
      * 关注页面
