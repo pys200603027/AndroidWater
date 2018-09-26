@@ -1,0 +1,8 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="EyepetizerTheme" parent="SampleAppTheme">
+       <item name="android:windowBackground">@null</item>
+    </style>
+
+</resources>

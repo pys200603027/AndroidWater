@@ -1,15 +1,19 @@
-apply plugin: 'com.android.library'
+apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion COMPILE_SDK_VERSION as int
+    compileSdkVersion 28
+
+
 
     defaultConfig {
-        minSdkVersion MIN_SDK_VERSION as int
-        targetSdkVersion TARGET_SDK_VERSION as int
+        applicationId "water.android.io.eyepetizer"
+        minSdkVersion 21
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
@@ -18,18 +22,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation dependencie.android.constraint
     implementation dependencie.android.appcompat
     testImplementation dependencie.test.junit
     androidTestImplementation dependencie.test.runner
     androidTestImplementation dependencie.test.espresso
-    //  功能组件
-    api dependencie.rxandroid
-    api dependencie.utilcode
-    api dependencie.klog
-    api dependencie.magicindicator
-    api project(':liquid')
+
+    implementation project(':apiEyepetizer')
+    implementation project(':water')
 }
