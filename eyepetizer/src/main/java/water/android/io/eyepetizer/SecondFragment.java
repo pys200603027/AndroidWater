@@ -1,4 +1,4 @@
-package water.android.io.water.base.app;
+package water.android.io.eyepetizer;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,13 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public abstract class BaseFragment extends Fragment {
+public class SecondFragment extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(setContentViewId(), container, false);
+        return inflater.inflate(R.layout.fragment_second, container, false);
     }
-
-    protected abstract int setContentViewId();
 }

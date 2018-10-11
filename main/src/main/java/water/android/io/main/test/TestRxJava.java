@@ -5,6 +5,7 @@ import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
+import water.android.io.liquid.utils.Log;
 
 public class TestRxJava {
 

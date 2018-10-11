@@ -17,9 +17,9 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
+import water.android.io.liquid.bean.RestfulResponse;
 import water.android.io.liquid.utils.Log;
 import water.android.io.main.bean.OneArticle;
-import water.android.io.main.bean.RestfulResponse;
 
 public class TestHttp {
     /**
