@@ -1,4 +1,4 @@
-package water.android.io.water.base.app;
+package water.android.io.uikit.app;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

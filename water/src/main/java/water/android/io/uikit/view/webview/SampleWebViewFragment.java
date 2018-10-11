@@ -1,4 +1,4 @@
-package water.android.io.water.base.view.webview;
+package water.android.io.uikit.view.webview;
 
 import android.graphics.Bitmap;
 import android.os.Build;

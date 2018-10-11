@@ -1,14 +1,13 @@
-package water.android.io.water.base.view.pager;
+package water.android.io.uikit.view.pager;
 
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 
 import water.android.io.water.base.R;
-import water.android.io.water.base.app.BaseActivity;
+import water.android.io.uikit.app.BaseActivity;
 
 /**
  * ViewPager+Indicator(底部按钮) 模版

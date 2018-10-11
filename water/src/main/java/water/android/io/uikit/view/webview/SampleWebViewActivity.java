@@ -1,12 +1,12 @@
-package water.android.io.water.base.view.webview;
+package water.android.io.uikit.view.webview;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import water.android.io.uikit.app.BaseActivity;
 import water.android.io.water.base.R;
-import water.android.io.water.base.app.BaseActivity;
 
 /**
  * 带RefreshLayout的WebView

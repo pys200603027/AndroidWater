@@ -1,4 +1,4 @@
-package water.android.io.water.base.view.pager;
+package water.android.io.uikit.view.pager;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
@@ -9,8 +9,8 @@ import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
 
-import water.android.io.water.base.view.pager.adapter.SampleNavigatorAdapter;
-import water.android.io.water.base.view.pager.adapter.SamplePagerAdapter;
+import water.android.io.uikit.view.pager.adapter.SampleNavigatorAdapter;
+import water.android.io.uikit.view.pager.adapter.SamplePagerAdapter;
 
 /**
  * 简化ViewPager +Indicator 操作 <p/>

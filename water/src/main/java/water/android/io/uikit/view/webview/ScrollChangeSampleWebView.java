@@ -1,4 +1,4 @@
-package water.android.io.water.base.view.webview;
+package water.android.io.uikit.view.webview;
 
 import android.content.Context;
 import android.util.AttributeSet;

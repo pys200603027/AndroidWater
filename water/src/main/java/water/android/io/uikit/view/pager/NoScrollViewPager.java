@@ -1,4 +1,4 @@
-package water.android.io.water.base.view.pager;
+package water.android.io.uikit.view.pager;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;

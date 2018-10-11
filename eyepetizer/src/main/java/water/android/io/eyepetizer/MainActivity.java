@@ -3,7 +3,7 @@ package water.android.io.eyepetizer;
 
 import android.support.v4.app.Fragment;
 
-import water.android.io.water.base.view.pager.TemplateViewPagerActivity;
+import water.android.io.uikit.view.pager.TemplateViewPagerActivity;
 
 
 public class MainActivity extends TemplateViewPagerActivity {

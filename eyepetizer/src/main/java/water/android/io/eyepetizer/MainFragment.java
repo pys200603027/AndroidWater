@@ -1,7 +1,7 @@
 package water.android.io.eyepetizer;
 
 import android.support.v4.app.Fragment;
-import water.android.io.water.base.view.pager.TemplateViewPagerFragment;
+import water.android.io.uikit.view.pager.TemplateViewPagerFragment;
 
 public class MainFragment extends TemplateViewPagerFragment {
 

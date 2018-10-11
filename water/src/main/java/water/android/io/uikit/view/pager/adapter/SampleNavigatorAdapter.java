@@ -1,4 +1,4 @@
-package water.android.io.water.base.view.pager.adapter;
+package water.android.io.uikit.view.pager.adapter;
 
 import android.content.Context;
 import android.graphics.Color;

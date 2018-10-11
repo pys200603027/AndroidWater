@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <water.android.io.water.base.view.pager.NoScrollViewPager
+    <water.android.io.uikit.view.pager.NoScrollViewPager
         android:id="@+id/view_pager"
         android:layout_above="@+id/indicator"
         android:layout_width="match_parent"
