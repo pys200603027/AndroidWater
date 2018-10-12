@@ -27,6 +27,7 @@ deps.okhttp = "com.squareup.okhttp3:okhttp:3.11.0"
 deps.okhttpLogger = "com.squareup.okhttp3:logging-interceptor:3.11.0"
 deps.utilcode = "com.blankj:utilcode:1.20.3"
 deps.klog="com.github.zhaokaiqiang.klog:library:1.6.0"
+deps.eventbus="org.greenrobot:eventbus:3.1.1"
 
 //ui
 deps.magicindicator="com.github.hackware1993:MagicIndicator:1.5.0"

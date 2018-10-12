@@ -8,6 +8,7 @@ dependencies {
     api dependencie.retrofit.adapterRxJava
     api dependencie.okhttp
     api dependencie.okhttpLogger
+    api dependencie.eventbus
 
 }
 
