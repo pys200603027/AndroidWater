@@ -7,7 +7,6 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
 import water.android.io.water.base.R;
 
 /**
@@ -29,10 +28,16 @@ public class SampleWebView extends SwipeRefreshLayout implements SwipeRefreshLay
     }
 
     private void init(Context context) {
+        try {
+            WebView webView = new WebView(context);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         LayoutInflater.from(context).inflate(R.layout.widget_refresh_webview, this);
         setOnRefreshListener(this);
 
-        webView = findViewById(R.id.webView);
+        webView = findViewById(R.id.nv_web);
         webView.setOnScrollChangedListener(new ScrollChangeSampleWebView.OnScrollChangedListener() {
             @Override
             public void onScrollChanged(int l, int t, int oldl, int oldt) {

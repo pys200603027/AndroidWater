@@ -1,23 +1,13 @@
 package water.android.io.uikit.view.webview;
 
-import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
-import com.socks.library.KLog;
-
 /**
  * 简单封装的WebView
  */
@@ -39,17 +29,13 @@ public class SampleWebViewFragment extends Fragment {
      * Called to instantiate the view. Creates and returns the WebView.
      */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        if (mWebView != null) {
-            mWebView.destroy();
-        }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        SampleWebView refreshWebView = new SampleWebView(getContext());
-        mWebView = refreshWebView.getWebView();
-        refreshWebclient = refreshWebView.getRefershWebClient();
+        SampleWebView sampleWebview = new SampleWebView(getContext());
+        mWebView = sampleWebview.getWebView();
+        refreshWebclient = sampleWebview.getRefershWebClient();
         mIsWebViewAvailable = true;
-        return refreshWebView;
+        return sampleWebview;
     }
 
     @Override
@@ -57,85 +43,17 @@ public class SampleWebViewFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         try {
-            final ScrollChangeSampleWebView webView = (ScrollChangeSampleWebView) getWebView();
-            /**
-             * WebClient & WebChromeClient
-             */
-            webView.setWebViewClient(new SampleWebViewClientWapper(refreshWebclient) {
-                @Override
-                public void onPageFinished(WebView view, String url) {
-                    super.onPageFinished(view, url);
-                    KLog.d("123", "+WebView onPageFinished");
-                }
-
-                @Override
-                public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-                    super.onReceivedError(view, request, error);
-                    KLog.d("123", "+WebView onReceivedError");
-                }
-
-                @Override
-                public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                    super.onPageStarted(view, url, favicon);
-                    KLog.d("123", "+WebView onPageStarted");
-                }
-
-                @Override
-                public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        if (request.getUrl().toString().startsWith("http://") || request.getUrl().toString().startsWith("https://")) {
-                            view.loadUrl(request.getUrl().toString());
-                            webView.stopLoading();
-                            return true;
-                        }
-                    }
-                    return super.shouldOverrideUrlLoading(view, request);
-                }
-            });
-            webView.setWebChromeClient(new WebChromeClient() {
-                @Override
-                public void onReceivedTitle(WebView view, String title) {
-                    super.onReceivedTitle(view, title);
-
-                }
-
-                @Override
-                public void onProgressChanged(WebView view, int newProgress) {
-                    super.onProgressChanged(view, newProgress);
-                    KLog.d("123", "WebView onProgressChanged:" + newProgress);
-                }
-            });
-            /**
-             * setting
-             */
-            WebSettings settings = getWebView().getSettings();
-            settings.setJavaScriptEnabled(true);
-            settings.setDomStorageEnabled(true);
-            settings.setAppCacheEnabled(false);
-            settings.setDefaultTextEncodingName("utf-8");
-            settings.setJavaScriptCanOpenWindowsAutomatically(true);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                //适配5.0不允许http和https混合使用情况
-                settings.setMixedContentMode(android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
-                webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-            } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-                webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+            String url = getArguments().getString("url");
+            if (url == null || url.isEmpty()) {
+                throw new RuntimeException("you must set URL by intent.for example: intent.putExtra(\"url\",your URL)");
             }
-            webView.clearCache(true);
+            SampleWebviewHelper webviewHelper = new SampleWebviewHelper(getWebView())
+                    .setWebviewSetting()
+                    .setSampleWebChromeClient()
+                    //让webview支持下拉刷新
+                    .setSampleWebViewClient(refreshWebclient)
+                    .loadURL(url);
 
-            webView.post(new Runnable() {
-                @Override
-                public void run() {
-                    //调用js
-                    String url = getArguments().getString("url");
-                    if (url == null || url.isEmpty()) {
-                        throw new RuntimeException("you must set URL by intent.for example: intent.putExtra(\"url\",your URL)");
-                    }
-                    webView.loadUrl((url));
-                }
-            });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -180,41 +98,4 @@ public class SampleWebViewFragment extends Fragment {
         }
         super.onDestroyView();
     }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    /*
-    js 相关
-     */
-
-    protected void removeJavascriptInterface(String method) {
-        WebView webView = getWebView();
-        if (webView != null) {
-            webView.removeJavascriptInterface(method);
-        }
-    }
-
-    protected void addJavascriptInterface(Object o, String method) {
-        WebView webView = getWebView();
-        if (webView != null) {
-            webView.addJavascriptInterface(o, method);
-        }
-    }
-
-    /**
-     * js调用 <br/>
-     * 例子：callJs("javascript:getToken(\"" + mUserToken + "\")", new ValueCallback<String>(){});
-     *
-     * @param js
-     * @param callback
-     */
-    private void callJs(String js, final ValueCallback<String> callback) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWebView().evaluateJavascript(js, callback);
-        } else {
-            getWebView().loadUrl(js);
-        }
-    }
-
-
 }

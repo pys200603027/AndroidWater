@@ -1,5 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="water.android.io.water.base" >
-    <uses-permission android:name="android.permission.INTERNET"/>
+    package="water.android.io.water.base">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application>
+        <activity
+            android:name="water.android.io.uikit.view.webview.SampleWebViewActivity"
+            android:screenOrientation="portrait" />
+    </application>
 </manifest>
 

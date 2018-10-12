@@ -18,9 +18,9 @@ import water.android.io.uikit.view.pager.adapter.SamplePagerAdapter;
  */
 public class SampleFraViewPagerHelper {
 
-    ViewPager viewPager;
-    MagicIndicator indicator;
-    Fragment[] fragments;
+    private ViewPager viewPager;
+    private MagicIndicator indicator;
+    private Fragment[] fragments;
 
     public SampleFraViewPagerHelper(ViewPager viewPager, MagicIndicator indicator) {
         this.viewPager = viewPager;
@@ -51,5 +51,17 @@ public class SampleFraViewPagerHelper {
         navigator.setAdapter(new SampleNavigatorAdapter(titles, titleDrawables, viewPager));
         indicator.setNavigator(navigator);
         ViewPagerHelper.bind(indicator, viewPager);
+    }
+
+    public ViewPager getViewPager() {
+        return viewPager;
+    }
+
+    public MagicIndicator getIndicator() {
+        return indicator;
+    }
+
+    public Fragment[] getFragments() {
+        return fragments;
     }
 }

@@ -24,9 +24,11 @@ public class SampleWebViewActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         String url = getIntent().getStringExtra("url");
-        fragment = new SampleWebViewFragment();
         android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction().add(R.id.fragment_container, SampleWebViewFragment.newInstance(url)).commit();
+        fm
+                .beginTransaction()
+                .add(R.id.fragment_container, SampleWebViewFragment.newInstance(url))
+                .commit();
     }
 
 

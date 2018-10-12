@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe_freshlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_freshlayout"
+    <water.android.io.uikit.view.webview.ScrollChangeSampleWebView
+        android:id="@+id/nv_web"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <io.liuliu.music.web.SampleWebView
-            android:id="@+id/webView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </android.support.v4.widget.SwipeRefreshLayout>
-</merge>
+        android:layout_height="match_parent" />
+</android.support.v4.widget.SwipeRefreshLayout>
