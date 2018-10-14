@@ -17,11 +17,12 @@ public class ABHandler {
     public void dispater(ABModel.Condition condition, List<ABModel> abModels, ABInterface abInterface) {
         boolean ret = true;
         for (ABModel abModel : abModels) {
-            if (ABModel.validate(abModel)) {
-                ret = ret & dispatchProp(condition, abModel);
+            if (!ABModel.validate(abModel)) {
+                ret = ret & false;
+                System.out.println("123:dispater ABModel validate=false");
+                continue;
             }
-            System.out.println("123:dispater ABModel validate=false");
-
+            ret = ret & dispatchProp(condition, abModel);
         }
         if (ret && abInterface != null) {
             abInterface.runTestA();

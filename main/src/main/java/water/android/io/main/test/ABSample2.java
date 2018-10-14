@@ -15,7 +15,9 @@ public class ABSample2 {
 //        }.getType());
 //
         testUidAndGender();
+        testUidAndGenderIn();
         testUuid();
+        testTime();
     }
 
     @ABTesting(prop = {"uid", "gender"}, op = {"out", "in"})
@@ -28,10 +30,30 @@ public class ABSample2 {
         abHandler.dispater(condition, abModels, new TestABInterImpl());
     }
 
+    @ABTesting(prop = {"uid", "gender"}, op = {"in", "in"})
+    private static void testUidAndGenderIn() {
+        List<ABModel> abModels = new ArrayList<>();
+        abModels.add(UnitTestModel.makeObjectA());
+        abModels.add(UnitTestModel.makeObjectC());
+        ABHandler abHandler = new ABHandler();
+        ABModel.Condition condition = new ABModel.Condition().setUid("134129").setGender("1");
+        abHandler.dispater(condition, abModels, new TestABInterImpl());
+    }
+
     @ABTesting(prop = "uid", op = "out")
     private static void testUuid() {
         List<ABModel> abModels = new ArrayList<>();
         abModels.add(UnitTestModel.makeObjectB());
+
+        ABHandler abHandler = new ABHandler();
+        ABModel.Condition condition = new ABModel.Condition().setUid("13412342349").setGender("1");
+        abHandler.dispater(condition, abModels, new TestABInterImpl());
+    }
+
+    @ABTesting(prop = "uid", op = "in")
+    private static void testTime() {
+        List<ABModel> abModels = new ArrayList<>();
+        abModels.add(UnitTestModel.makeObjectD());
 
         ABHandler abHandler = new ABHandler();
         ABModel.Condition condition = new ABModel.Condition().setUid("13412342349").setGender("1");

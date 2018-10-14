@@ -53,4 +53,19 @@ public class UnitTestModel {
         System.out.println(expParam);
         return expParam;
     }
+
+    public static ABModel<String> makeObjectD() {
+        ABModel<String> expParam = new ABModel();
+        expParam.expireTime = 123123123;
+        expParam.name = "login";
+        expParam.prop = "gender";
+        expParam.op = "in";
+        expParam.startTime = 1539473051000L;
+        expParam.expireTime = 1539473051000L;
+        expParam.value = new ArrayList<>();
+        expParam.value.add("1");
+
+        System.out.println(expParam);
+        return expParam;
+    }
 }
