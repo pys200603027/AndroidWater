@@ -1,4 +1,4 @@
-package water.android.io.main.ab;
+package water.android.io.main.test;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -9,51 +9,50 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import water.android.io.main.ab.ABModel;
+import water.android.io.main.ab.annotation.ABTesting;
 
+@Deprecated
 public class ABSample {
 
     public static void main(String[] args) {
 
-        Gson gson = new Gson();
-        List<ExpParam> list = gson.fromJson(ExpParam.testData(), new TypeToken<List<ExpParam>>() {}.getType());
-        for (ExpParam p : list) {
-            handleTest(p);
-        }
+
     }
 
-    public static void handleTest(ExpParam expParam) {
+    public static void handleTest(ABModel expParam) {
         if (!expParam.checkExpireTime()) {
             return;
         }
         try {
-            handleOp(expParam, ABHandler.class);
+//            handleOp(expParam, ABHandler.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
-    public static void handleOp(ExpParam expParam, Object obj) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    public static void handleOp(ABModel expParam, Object obj) throws IllegalAccessException, InvocationTargetException, InstantiationException {
         List<Method> methods = getDeclaredAnnotationMethod(obj.getClass(), ABTesting.class);
         if (methods.isEmpty()) {
             return;
         }
         for (Method m : methods) {
             ABTesting annotation = m.getAnnotation(ABTesting.class);
-            if (annotation.op().equals(expParam.op) && annotation.pro().equals(expParam.prop)) {
+            if (annotation.op().equals(expParam.op) && annotation.prop().equals(expParam.prop)) {
                 m.invoke(obj, null);
             }
         }
     }
 
-    public static void handleOp(ExpParam expParam, Class c) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    public static void handleOp(ABModel expParam, Class c) throws IllegalAccessException, InvocationTargetException, InstantiationException {
         List<Method> methods = getDeclaredAnnotationMethod(c, ABTesting.class);
         if (methods.isEmpty()) {
             return;
         }
         for (Method m : methods) {
             ABTesting annotation = m.getAnnotation(ABTesting.class);
-            if (annotation.op().equals(expParam.op) && annotation.pro().equals(expParam.prop)) {
+            if (annotation.op().equals(expParam.op) && annotation.prop().equals(expParam.prop)) {
                 m.invoke(c.newInstance(), null);
             }
         }
