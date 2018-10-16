@@ -5,7 +5,7 @@ import java.util.List;
 
 import water.android.io.main.ab.ABHandler;
 import water.android.io.main.ab.ABModel;
-import water.android.io.main.ab.UnitTestModel;
+import water.android.io.main.ab.test.UnitTestModel;
 import water.android.io.main.ab.annotation.ABTesting;
 
 public class ABSample2 {

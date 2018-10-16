@@ -22,7 +22,7 @@ public class ABModel<T> {
     public long startTime;
 
     /**
-     * prop->op->value 为级联关系, prop确定了用例需要用到的策略,见{@see ABStrategy}，op定义了操作，见{@see ABModel.Op},values为操作需要的值
+     * prop->op->value 为级联关系, prop确定了用例需要用到的策略,见{@see ABStrategyImpl}，op定义了操作，见{@see ABModel.Op},values为操作需要的值
      */
     public String prop;
     public String op;

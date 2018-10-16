@@ -8,12 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import water.android.io.main.ab.exception.ExecuteTimeErrorException;
+import water.android.io.main.ab.strategy.ABStrategy;
+import water.android.io.main.ab.strategy.ABStrategyImpl;
 
 /**
  * A/B测试分发
  */
 public class ABHandler {
-    private ABStrategy abStrategy = new ABStrategy();
+    private ABStrategy abStrategy = new ABStrategyImpl();
 
     public void dispatch(ABModel.Condition condition, String json, ABAction abAction, ABError abError) {
         List<ABModel> unfilterABlist = parseABModel(json);
@@ -21,6 +23,8 @@ public class ABHandler {
     }
 
     /**
+     * AB测试分发逻辑
+     *
      * @param condition      A/B测试所需要传入的比较参数,比如真实的用户uid，用户性别
      * @param unfilterABlist 访问服务器返回的A/B测试描述ABModel对象
      * @param abAction       执行接口
@@ -50,7 +54,7 @@ public class ABHandler {
             boolean ret = true;
             for (ABModel abModel : abModelsFilters) {
                 System.out.println("after filter: " + abModel);
-                ret = ret & dispatchProp(condition, abModel);
+                ret = ret & abStrategy.dispatchProp(condition, abModel);
             }
             if (abAction != null) {
                 abAction.run(ret);
@@ -61,31 +65,6 @@ public class ABHandler {
             }
         }
 
-    }
-
-
-    /**
-     * 根据ABModel->prop属性判断执行对策略
-     *
-     * @param condition
-     * @param abModel
-     * @return
-     */
-    private boolean dispatchProp(ABModel.Condition condition, ABModel abModel) {
-        boolean ret = false;
-        /**
-         * 通过属性prop分发到不同执行策略
-         */
-        if (abModel.prop.equals(ABModel.Value.PROP_UID)) {
-            ABModel<String> tmpModle = abModel;
-            ret = abStrategy.checkUid(condition.getUid(), tmpModle);
-            System.out.println("123:dispatchProp->checkUid=" + ret);
-        } else if (abModel.prop.equals(ABModel.Value.PROP_GENDER)) {
-            ABModel<String> tmpModle = abModel;
-            ret = abStrategy.checkGender(condition.getGender(), tmpModle);
-            System.out.println("123:dispatchProp->checkGender=" + ret);
-        }
-        return ret;
     }
 
     /**
@@ -113,6 +92,5 @@ public class ABHandler {
     public interface ABError {
         void throwable(Exception e);
     }
-
 
 }
