@@ -15,6 +15,11 @@ import water.android.io.main.ab.exception.ExecuteTimeErrorException;
 public class ABHandler {
     private ABStrategy abStrategy = new ABStrategy();
 
+    public void dispatch(ABModel.Condition condition, String json, ABAction abAction, ABError abError) {
+        List<ABModel> unfilterABlist = parseABModel(json);
+        dispatch(condition, unfilterABlist, abAction, abError);
+    }
+
     /**
      * @param condition      A/B测试所需要传入的比较参数,比如真实的用户uid，用户性别
      * @param unfilterABlist 访问服务器返回的A/B测试描述ABModel对象
