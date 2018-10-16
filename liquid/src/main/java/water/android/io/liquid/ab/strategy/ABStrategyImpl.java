@@ -1,10 +1,10 @@
-package water.android.io.main.ab.strategy;
+package water.android.io.liquid.ab.strategy;
 
 import java.util.List;
 
-import water.android.io.main.ab.ABModel;
-import water.android.io.main.ab.annotation.ABTesting;
-import water.android.io.main.ab.annotation.ABTestingStratedy;
+import water.android.io.liquid.ab.annotation.ABTesting;
+import water.android.io.liquid.ab.ABModel;
+import water.android.io.liquid.ab.annotation.ABTestingStratedy;
 
 /**
  * AB测试分发策略  <br/>

@@ -3,10 +3,10 @@ package water.android.io.main.test;
 import java.util.ArrayList;
 import java.util.List;
 
-import water.android.io.main.ab.ABHandler;
-import water.android.io.main.ab.ABModel;
-import water.android.io.main.ab.test.UnitTestModel;
-import water.android.io.main.ab.annotation.ABTesting;
+import water.android.io.liquid.ab.ABHandler;
+import water.android.io.liquid.ab.ABModel;
+import water.android.io.liquid.ab.test.UnitTestModel;
+import water.android.io.liquid.ab.annotation.ABTesting;
 
 public class ABSample2 {
     public static void main(String[] args) {

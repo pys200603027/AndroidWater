@@ -1,4 +1,4 @@
-package water.android.io.main.ab.annotation;
+package water.android.io.liquid.ab.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

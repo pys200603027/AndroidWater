@@ -1,4 +1,4 @@
-package water.android.io.main.ab;
+package water.android.io.liquid.ab;
 
 
 import com.google.gson.Gson;
@@ -7,10 +7,10 @@ import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.List;
 
-import water.android.io.main.ab.exception.ExecuteTimeErrorException;
-import water.android.io.main.ab.exception.FlatformErrorException;
-import water.android.io.main.ab.strategy.ABStrategy;
-import water.android.io.main.ab.strategy.ABStrategyImpl;
+import water.android.io.liquid.ab.exception.ExecuteTimeErrorException;
+import water.android.io.liquid.ab.exception.FlatformErrorException;
+import water.android.io.liquid.ab.strategy.ABStrategy;
+import water.android.io.liquid.ab.strategy.ABStrategyImpl;
 
 /**
  * A/B测试分发

@@ -1,6 +1,6 @@
-package water.android.io.main.ab.strategy;
+package water.android.io.liquid.ab.strategy;
 
-import water.android.io.main.ab.ABModel;
+import water.android.io.liquid.ab.ABModel;
 
 public interface ABStrategy {
     /**

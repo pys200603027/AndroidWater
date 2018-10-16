@@ -1,8 +1,8 @@
-package water.android.io.main.ab.test;
+package water.android.io.liquid.ab.test;
 
 import java.util.ArrayList;
 
-import water.android.io.main.ab.ABModel;
+import water.android.io.liquid.ab.ABModel;
 
 /**
  * 测试用例

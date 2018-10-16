@@ -1,16 +1,13 @@
 package water.android.io.main.test;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-import water.android.io.main.ab.ABModel;
-import water.android.io.main.ab.annotation.ABTesting;
+import water.android.io.liquid.ab.ABModel;
+import water.android.io.liquid.ab.annotation.ABTesting;
 
 @Deprecated
 public class ABSample {
