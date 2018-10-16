@@ -4,6 +4,10 @@ import java.util.List;
 
 public class ABModel<T> {
     /**
+     * 平台
+     */
+    public String platform;
+    /**
      * name表示用例在那个功能区域执行，比如login
      */
     public String name;
@@ -32,12 +36,10 @@ public class ABModel<T> {
      * @return
      */
     public static boolean validate(ABModel abModel) {
-        if (ABModel.checkNull(abModel)) {
-            return false;
-        }
         return (abModel.checkStartTime() && abModel.checkExpireTime());
     }
 
+    @Deprecated
     public static boolean checkNull(ABModel abModel) {
         return (abModel == null || abModel.value == null || abModel.value.isEmpty());
     }
@@ -104,6 +106,7 @@ public class ABModel<T> {
         sb.append("op:").append(op).append(",");
         sb.append("startTime:").append(startTime).append(",");
         sb.append("expireTime:").append(expireTime).append(",");
+        sb.append("value:").append(value);
         sb.append("}");
         return sb.toString();
     }

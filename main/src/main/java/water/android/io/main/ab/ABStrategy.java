@@ -19,9 +19,6 @@ public class ABStrategy {
     @ABTesting(prop = "uid", op = {ABModel.Value.OP_IN, ABModel.Value.OP_OUT, ABModel.Value.OP_EQ})
     public boolean checkUid(String condition, ABModel<String> abModel) {
         List<String> values = abModel.value;
-        if (condition == null || condition.isEmpty() || ABModel.checkNull(abModel)) {
-            return false;
-        }
         String lastS = condition.substring(condition.length() - 1, condition.length());
         return commonCheckString(lastS, abModel.op, values);
     }
@@ -36,9 +33,6 @@ public class ABStrategy {
     @ABTesting(prop = "gender", op = "eq")
     public boolean checkGender(String condition, ABModel<String> abModel) {
         List<String> values = abModel.value;
-        if (condition == null || condition.isEmpty() || ABModel.checkNull(abModel)) {
-            return false;
-        }
         return commonCheckString(condition, abModel.op, values);
     }
 
