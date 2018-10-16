@@ -32,11 +32,17 @@ public class ABModel<T> {
     /**
      * ABModel使用前对整体检查
      *
-     * @param abModel
      * @return
      */
-    public static boolean validate(ABModel abModel) {
-        return (abModel.checkStartTime() && abModel.checkExpireTime());
+    public boolean validate() {
+        return (checkStartTime() && checkExpireTime());
+    }
+
+    public boolean checkFlatForm() {
+        if (platform == null || platform.isEmpty() || Value.FLATFORM_ANDROID.equals(platform) || Value.FLATFORM_ALL.equals(platform)) {
+            return true;
+        }
+        return false;
     }
 
     @Deprecated
@@ -130,6 +136,9 @@ public class ABModel<T> {
         public static final String OP_EQ = "eq";
         public static final String OP_GREATER = "greater";
         public static final String OP_LESS = "less";
+
+        public static final String FLATFORM_ANDROID = "android";
+        public static final String FLATFORM_ALL = "all";
     }
 
 

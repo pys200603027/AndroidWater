@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import water.android.io.main.ab.exception.ExecuteTimeErrorException;
+import water.android.io.main.ab.exception.FlatformErrorException;
 import water.android.io.main.ab.strategy.ABStrategy;
 import water.android.io.main.ab.strategy.ABStrategyImpl;
 
@@ -38,33 +39,66 @@ public class ABHandler {
             if (unfilterABlist == null || unfilterABlist.isEmpty()) {
                 throw new NullPointerException("ABModel instance is null.");
             }
-            //剔除不在ABTesting时间范围内的用例
-            List<ABModel> abModelsFilters = new ArrayList<>();
-            for (ABModel abModel : unfilterABlist) {
-                boolean timeValidated = ABModel.validate(abModel);
-                if (timeValidated) {
-                    abModelsFilters.add(abModel);
+
+            /**
+             * 后期考虑封装成责任链
+             */
+            long logTime = System.currentTimeMillis();
+            //剔除平台不是Android的测试用例
+            List<ABModel> platformFilter = filter(unfilterABlist, new Filter() {
+                @Override
+                public boolean check(ABModel abModel) {
+                    return abModel.checkFlatForm();
                 }
+            });
+            if (platformFilter.isEmpty()) {
+                throw new FlatformErrorException("Not Testing in android");
             }
+            //剔除不在ABTesting时间范围内的用例
+            List<ABModel> timeFilter = filter(platformFilter, new Filter() {
+                @Override
+                public boolean check(ABModel abModel) {
+                    return abModel.validate();
+                }
+            });
+
             //如果所有用例都不在测试时间内，返回错误
-            if (abModelsFilters.isEmpty()) {
+            if (timeFilter.isEmpty()) {
                 throw new ExecuteTimeErrorException("Not in abTesting time");
             }
 
             boolean ret = true;
-            for (ABModel abModel : abModelsFilters) {
+            for (ABModel abModel : timeFilter) {
                 System.out.println("after filter: " + abModel);
                 ret = ret & abStrategy.dispatchProp(condition, abModel);
             }
             if (abAction != null) {
                 abAction.run(ret);
             }
+            System.out.println("123,ABHandler dispatch Cost Time:" + (System.currentTimeMillis() - logTime) + " ms");
         } catch (Exception e) {
             if (abError != null) {
                 abError.throwable(e);
             }
         }
 
+    }
+
+    /**
+     * 过滤器,执行AB测试之前的满足条件
+     *
+     * @param unfilterABlist
+     * @param filter
+     * @return
+     */
+    private List<ABModel> filter(List<ABModel> unfilterABlist, Filter filter) {
+        List<ABModel> abModelsFilters = new ArrayList<>();
+        for (ABModel abModel : unfilterABlist) {
+            if (filter.check(abModel)) {
+                abModelsFilters.add(abModel);
+            }
+        }
+        return abModelsFilters;
     }
 
     /**
@@ -84,6 +118,10 @@ public class ABHandler {
         }
     }
 
+    interface Filter {
+        boolean check(ABModel abModel);
+    }
+
 
     public interface ABAction {
         void run(boolean result);
@@ -92,5 +130,6 @@ public class ABHandler {
     public interface ABError {
         void throwable(Exception e);
     }
+
 
 }

@@ -21,6 +21,7 @@ public class ABSample2 {
         testNull_3();
         testNull_4();
         testAndCondition();
+        testPlatform();
 
         System.out.println(ABHandler.parseABModel("abc") == null);
     }
@@ -109,6 +110,14 @@ public class ABSample2 {
         List<ABModel> abModels = new ArrayList<>();
         abModels.add(UnitTestModel.makeObjectA());
         abModels.add(UnitTestModel.makeObjectD());
+        ABModel.Condition condition = new ABModel.Condition().setUid("13412342342").setGender("1");
+        ABHandler abHandler = new ABHandler();
+        abHandler.dispatch(condition, abModels, new TestABInterImpl(), new TestABErrorImpl());
+    }
+
+    private static void testPlatform(){
+        List<ABModel> abModels = new ArrayList<>();
+        abModels.add(UnitTestModel.makeObjectF());
         ABModel.Condition condition = new ABModel.Condition().setUid("13412342342").setGender("1");
         ABHandler abHandler = new ABHandler();
         abHandler.dispatch(condition, abModels, new TestABInterImpl(), new TestABErrorImpl());
