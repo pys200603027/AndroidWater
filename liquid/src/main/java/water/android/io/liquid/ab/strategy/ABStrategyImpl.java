@@ -9,7 +9,7 @@ import water.android.io.liquid.ab.annotation.ABTestingStratedy;
 /**
  * AB测试分发策略  <br/>
  */
-public class ABStrategyImpl implements ABStrategy{
+public class ABStrategyImpl implements ABStrategy {
 
     /**
      * 根据ABModel->prop属性判断执行对策略
@@ -32,6 +32,12 @@ public class ABStrategyImpl implements ABStrategy{
             ABModel<String> tmpModle = abModel;
             ret = checkGender(condition.getGender(), tmpModle);
             System.out.println("123:dispatchProp->checkGender=" + ret);
+        } else if (ABModel.Value.PROP_FLAG.equals(abModel.prop)) {
+            if (abModel.value.contains("true")) {
+                ret = true;
+            } else {
+                ret = false;
+            }
         }
         return ret;
     }
