@@ -10,5 +10,5 @@ public interface ABStrategy {
      * @param abModel   AB测试数据，描述了AB测试的行为,比如： 用户id尾数在{0，1，3}之内的
      * @return
      */
-    boolean dispatchProp(ABModel.Condition condition, ABModel abModel);
+    boolean dispatchProp(ABModel.ABCondition condition, ABModel abModel);
 }

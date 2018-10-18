@@ -75,7 +75,12 @@ public class ABModel<T> {
     /**
      * AB测试需要外部用户传递过来的比对参数
      */
-    public static class Condition {
+    public static class ABCondition {
+
+        /**
+         * 该AB测试
+         */
+        private String AbTestName;
         /**
          * 用户uuid
          */
@@ -85,11 +90,32 @@ public class ABModel<T> {
          */
         private String gender;
 
+        private String costom;
+
+
+        public String getCostom() {
+            return costom;
+        }
+
+        public ABCondition setCostom(String costom) {
+            this.costom = costom;
+            return this;
+        }
+
+        public String getAbTestName() {
+            return AbTestName;
+        }
+
+        public ABCondition setAbTestName(String abTestName) {
+            AbTestName = abTestName;
+            return this;
+        }
+
         public String getUid() {
             return uid;
         }
 
-        public Condition setUid(String uid) {
+        public ABCondition setUid(String uid) {
             this.uid = uid;
             return this;
         }
@@ -98,10 +124,17 @@ public class ABModel<T> {
             return gender;
         }
 
-        public Condition setGender(String gender) {
+        public ABCondition setGender(String gender) {
             this.gender = gender;
             return this;
         }
+    }
+
+    /**
+     * 检查ABModel中的values是否可以转化为Int
+     */
+    public boolean checkIsParseToInt() {
+        return (op.equals(ABModel.Value.OP_LESS) || op.equals(ABModel.Value.OP_GREATER));
     }
 
     @Override
@@ -127,15 +160,16 @@ public class ABModel<T> {
         public static final String PROP_UID = "uid";
         public static final String PROP_FLAG = "flag";
         public static final String PROP_GENDER = "gender";
+        public static final String PROP_COSTOM = "costom";
 
         /**
          * op属性可能对应的值
          */
-        public static final String OP_IN = "in";
-        public static final String OP_OUT = "out";
+        public static final String OP_IN = "include";
+        public static final String OP_OUT = "exclude";
         public static final String OP_EQ = "eq";
-        public static final String OP_GREATER = "greater";
-        public static final String OP_LESS = "less";
+        public static final String OP_GREATER = "gt";
+        public static final String OP_LESS = "lt";
 
         public static final String FLATFORM_ANDROID = "android";
         public static final String FLATFORM_ALL = "all";
@@ -156,7 +190,7 @@ public class ABModel<T> {
             return !values.contains(target);
         }
 
-        public static boolean checkoutGrater(long target, List<Long> values) {
+        public static boolean checkoutGrater(int target, List<Integer> values) {
             for (long l : values) {
                 if (target > l) {
                     return true;
@@ -165,7 +199,7 @@ public class ABModel<T> {
             return false;
         }
 
-        public static boolean checkoutLess(long target, List<Long> values) {
+        public static boolean checkoutLess(int target, List<Integer> values) {
             for (long l : values) {
                 if (target < l) {
                     return true;

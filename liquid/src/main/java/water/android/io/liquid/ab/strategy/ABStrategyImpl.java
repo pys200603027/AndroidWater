@@ -1,5 +1,6 @@
 package water.android.io.liquid.ab.strategy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import water.android.io.liquid.ab.annotation.ABTesting;
@@ -19,28 +20,45 @@ public class ABStrategyImpl implements ABStrategy {
      * @return
      */
     @Override
-    public boolean dispatchProp(ABModel.Condition condition, ABModel abModel) {
+    public boolean dispatchProp(ABModel.ABCondition condition, ABModel abModel) {
         boolean ret = false;
         /**
          * 通过属性prop分发到不同执行策略
          */
         if (abModel.prop.equals(ABModel.Value.PROP_UID)) {
+
             ABModel<String> tmpModle = abModel;
             ret = checkUid(condition.getUid(), tmpModle);
             System.out.println("123:dispatchProp->checkUid=" + ret);
+
         } else if (abModel.prop.equals(ABModel.Value.PROP_GENDER)) {
+
             ABModel<String> tmpModle = abModel;
             ret = checkGender(condition.getGender(), tmpModle);
             System.out.println("123:dispatchProp->checkGender=" + ret);
+
         } else if (ABModel.Value.PROP_FLAG.equals(abModel.prop)) {
+
             if (abModel.value.contains("true")) {
                 ret = true;
             } else {
                 ret = false;
             }
+            System.out.println("123:dispatchProp->checkFlag=" + ret);
+
+        } else if (ABModel.Value.PROP_COSTOM.equals(abModel.prop)) {
+
+            if (abModel.checkIsParseToInt()) {
+                ret = commonCheckInt(condition.getCostom(), abModel.op, abModel.value);
+            } else {
+                ret = commonCheckString(condition.getCostom(), abModel.op, abModel.value);
+            }
+
+            System.out.println("123:dispatchProp->checkCostom=" + ret);
         }
         return ret;
     }
+
 
     /**
      * 判断用户UID最后一位是否属于values数组中
@@ -52,8 +70,13 @@ public class ABStrategyImpl implements ABStrategy {
     public boolean checkUid(String condition, ABModel<String> abModel) {
         List<String> values = abModel.value;
         String lastS = condition.substring(condition.length() - 1, condition.length());
+
+        if (abModel.checkIsParseToInt()) {
+            return commonCheckInt(lastS, abModel.op, values);
+        }
         return commonCheckString(lastS, abModel.op, values);
     }
+
 
     /**
      * 通过判断性别进行策略分发
@@ -81,5 +104,19 @@ public class ABStrategyImpl implements ABStrategy {
             ret = ABModel.Op.checkOut(condition, values);
         }
         return ret;
+    }
+
+
+    private boolean commonCheckInt(String condition, String op, List<String> values) {
+        List<Integer> coverList = new ArrayList<>();
+        for (String s : values) {
+            coverList.add(Integer.parseInt(s));
+        }
+        if (ABModel.Value.OP_GREATER.equals(op)) {
+            return ABModel.Op.checkoutGrater(Integer.parseInt(condition), coverList);
+        } else if (ABModel.Value.OP_LESS.equals(op)) {
+            return ABModel.Op.checkoutLess(Integer.parseInt(condition), coverList);
+        }
+        return false;
     }
 }

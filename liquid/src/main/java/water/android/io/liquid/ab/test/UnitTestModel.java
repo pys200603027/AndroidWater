@@ -14,7 +14,7 @@ public class UnitTestModel {
         expParam.expireTime = 123123123;
         expParam.name = "login";
         expParam.prop = "uid";
-        expParam.op = "in";
+        expParam.op = "include";
         expParam.startTime = 1539504131000L;
         expParam.expireTime = 1542193331000L;
         expParam.value = new ArrayList<>();
@@ -31,7 +31,7 @@ public class UnitTestModel {
         expParam.expireTime = 123123123;
         expParam.name = "login";
         expParam.prop = "uid";
-        expParam.op = "out";
+        expParam.op = "exclude";
         expParam.startTime = 1539504131000L;
         expParam.expireTime = 1542193331000L;
         expParam.value = new ArrayList<>();
@@ -47,7 +47,7 @@ public class UnitTestModel {
     public static ABModel<String> makeObjectC() {
         ABModel<String> expParam = new ABModel();
         expParam.expireTime = 123123123;
-        expParam.name = "login";
+        expParam.name = "update";
         expParam.prop = "gender";
         expParam.op = "in";
         expParam.startTime = 1539504131000L;
@@ -64,7 +64,7 @@ public class UnitTestModel {
         expParam.expireTime = 123123123;
         expParam.name = "login";
         expParam.prop = "gender";
-        expParam.op = "in";
+        expParam.op = "include";
         expParam.startTime = 1539473051000L;
         expParam.expireTime = 1539473051000L;
         expParam.value = new ArrayList<>();
@@ -79,7 +79,7 @@ public class UnitTestModel {
         expParam.expireTime = 123123123;
         expParam.name = "login";
         expParam.prop = "gender";
-        expParam.op = "in";
+        expParam.op = "include";
         expParam.startTime = 1539473051000L;
         expParam.expireTime = 1542193331000L;
         expParam.value = new ArrayList<>();
@@ -93,7 +93,7 @@ public class UnitTestModel {
         expParam.expireTime = 123123123;
         expParam.name = "login";
         expParam.prop = "uid";
-        expParam.op = "in";
+        expParam.op = "include";
         expParam.platform = "ios";
         expParam.startTime = 1539504131000L;
         expParam.expireTime = 1542193331000L;
@@ -114,9 +114,26 @@ public class UnitTestModel {
         expParam.op = "eq";
         expParam.platform = "all";
         expParam.startTime = 1539504131000L;
-        expParam.expireTime = 1542297600000L;
+        expParam.expireTime = 1545047014000L;
         expParam.value = new ArrayList<>();
         expParam.value.add("false");
+        System.out.println(expParam);
+        return expParam;
+    }
+
+    public static ABModel<String> makeObjectI() {
+        ABModel<String> expParam = new ABModel();
+        expParam.expireTime = 123123123;
+        expParam.name = "login";
+        expParam.prop = "costom";
+        expParam.op = "lt";
+        expParam.platform = "all";
+        expParam.startTime = 1539504131000L;
+        expParam.expireTime = 1545047014000L;
+        expParam.value = new ArrayList<>();
+        expParam.value.add("1");
+        expParam.value.add("2");
+        expParam.value.add("3");
         System.out.println(expParam);
         return expParam;
     }

@@ -23,6 +23,7 @@ public class ABSample2 {
         testAndCondition();
         testPlatform();
         testFlag();
+        testCostom();
 
         System.out.println(ABHandler.parseABModel("abc") == null);
     }
@@ -34,7 +35,7 @@ public class ABSample2 {
         abModels.add(UnitTestModel.makeObjectB());
         abModels.add(UnitTestModel.makeObjectC());
         ABHandler abHandler = new ABHandler();
-        ABModel.Condition condition = new ABModel.Condition().setUid("134129").setGender("1");
+        ABModel.ABCondition condition = new ABModel.ABCondition().setUid("134129").setGender("1").setAbTestName("login");
         abHandler.dispatch(condition, abModels, new TestABInterImpl(), new TestABErrorImpl());
     }
 
@@ -44,7 +45,7 @@ public class ABSample2 {
         abModels.add(UnitTestModel.makeObjectA());
         abModels.add(UnitTestModel.makeObjectC());
         ABHandler abHandler = new ABHandler();
-        ABModel.Condition condition = new ABModel.Condition().setUid("134129").setGender("1");
+        ABModel.ABCondition condition = new ABModel.ABCondition().setUid("134129").setGender("1").setAbTestName("login");
         abHandler.dispatch(condition, abModels, new TestABInterImpl(), new TestABErrorImpl());
     }
 
@@ -54,7 +55,7 @@ public class ABSample2 {
         abModels.add(UnitTestModel.makeObjectB());
 
         ABHandler abHandler = new ABHandler();
-        ABModel.Condition condition = new ABModel.Condition().setUid("13412342349").setGender("1");
+        ABModel.ABCondition condition = new ABModel.ABCondition().setUid("13412342349").setGender("1").setAbTestName("login");
         abHandler.dispatch(condition, abModels, new TestABInterImpl(), new TestABErrorImpl());
     }
 
@@ -64,27 +65,27 @@ public class ABSample2 {
         abModels.add(UnitTestModel.makeObjectD());
 
         ABHandler abHandler = new ABHandler();
-        ABModel.Condition condition = new ABModel.Condition().setUid("13412342349").setGender("1");
+        ABModel.ABCondition condition = new ABModel.ABCondition().setUid("13412342349").setGender("1").setAbTestName("login");
         abHandler.dispatch(condition, abModels, new TestABInterImpl(), new TestABErrorImpl());
     }
 
     private static void testNull() {
         List<ABModel> abModels = null;
-        ABModel.Condition condition = null;
+        ABModel.ABCondition condition = null;
         ABHandler abHandler = new ABHandler();
         abHandler.dispatch(condition, abModels, new TestABInterImpl(), new TestABErrorImpl());
     }
 
     private static void testNull_1() {
         List<ABModel> abModels = null;
-        ABModel.Condition condition = new ABModel.Condition();
+        ABModel.ABCondition condition = new ABModel.ABCondition();
         ABHandler abHandler = new ABHandler();
         abHandler.dispatch(condition, abModels, new TestABInterImpl(), new TestABErrorImpl());
     }
 
     private static void testNull_2() {
         List<ABModel> abModels = new ArrayList<>();
-        ABModel.Condition condition = new ABModel.Condition().setUid("13412342349").setGender("1");
+        ABModel.ABCondition condition = new ABModel.ABCondition().setUid("13412342349").setGender("1").setAbTestName("login");
         ABHandler abHandler = new ABHandler();
         abHandler.dispatch(condition, abModels, new TestABInterImpl(), new TestABErrorImpl());
     }
@@ -92,7 +93,7 @@ public class ABSample2 {
     private static void testNull_3() {
         List<ABModel> abModels = new ArrayList<>();
         abModels.add(UnitTestModel.makeObjectE());
-        ABModel.Condition condition = new ABModel.Condition().setUid("13412342349").setGender("1");
+        ABModel.ABCondition condition = new ABModel.ABCondition().setUid("13412342349").setGender("1").setAbTestName("login");
         ABHandler abHandler = new ABHandler();
         abHandler.dispatch(condition, abModels, new TestABInterImpl(), new TestABErrorImpl());
     }
@@ -100,7 +101,7 @@ public class ABSample2 {
     private static void testNull_4() {
         List<ABModel> abModels = new ArrayList<>();
         abModels.add(UnitTestModel.makeObjectE());
-        ABModel.Condition condition = new ABModel.Condition();
+        ABModel.ABCondition condition = new ABModel.ABCondition();
         condition.setGender(null);
         condition.setUid(null);
         ABHandler abHandler = new ABHandler();
@@ -111,7 +112,7 @@ public class ABSample2 {
         List<ABModel> abModels = new ArrayList<>();
         abModels.add(UnitTestModel.makeObjectA());
         abModels.add(UnitTestModel.makeObjectD());
-        ABModel.Condition condition = new ABModel.Condition().setUid("13412342342").setGender("1");
+        ABModel.ABCondition condition = new ABModel.ABCondition().setUid("13412342342").setGender("1").setAbTestName("login");
         ABHandler abHandler = new ABHandler();
         abHandler.dispatch(condition, abModels, new TestABInterImpl(), new TestABErrorImpl());
     }
@@ -119,7 +120,7 @@ public class ABSample2 {
     private static void testPlatform() {
         List<ABModel> abModels = new ArrayList<>();
         abModels.add(UnitTestModel.makeObjectF());
-        ABModel.Condition condition = new ABModel.Condition().setUid("13412342342").setGender("1");
+        ABModel.ABCondition condition = new ABModel.ABCondition().setUid("13412342342").setGender("1").setAbTestName("login");
         ABHandler abHandler = new ABHandler();
         abHandler.dispatch(condition, abModels, new TestABInterImpl(), new TestABErrorImpl());
     }
@@ -127,7 +128,17 @@ public class ABSample2 {
     private static void testFlag() {
         List<ABModel> abModels = new ArrayList<>();
         abModels.add(UnitTestModel.makeObjectG());
-        ABModel.Condition condition = new ABModel.Condition().setUid("13412342342").setGender("1");
+        ABModel.ABCondition condition = new ABModel.ABCondition().setUid("13412342342").setGender("1").setAbTestName("login");
+        ABHandler abHandler = new ABHandler();
+        abHandler.dispatch(condition, abModels, new TestABInterImpl(), new TestABErrorImpl());
+    }
+
+    private static void testCostom() {
+        List<ABModel> abModels = new ArrayList<>();
+        abModels.add(UnitTestModel.makeObjectI());
+        ABModel.ABCondition condition = new ABModel.ABCondition()
+                .setCostom("4")
+                .setAbTestName("login");
         ABHandler abHandler = new ABHandler();
         abHandler.dispatch(condition, abModels, new TestABInterImpl(), new TestABErrorImpl());
     }

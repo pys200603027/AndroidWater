@@ -9,6 +9,7 @@ import java.util.List;
 
 import water.android.io.liquid.ab.exception.ExecuteTimeErrorException;
 import water.android.io.liquid.ab.exception.FlatformErrorException;
+import water.android.io.liquid.ab.exception.NotThisTestException;
 import water.android.io.liquid.ab.strategy.ABStrategy;
 import water.android.io.liquid.ab.strategy.ABStrategyImpl;
 
@@ -18,7 +19,7 @@ import water.android.io.liquid.ab.strategy.ABStrategyImpl;
 public class ABHandler {
     private ABStrategy abStrategy = new ABStrategyImpl();
 
-    public void dispatch(ABModel.Condition condition, String json, ABAction abAction, ABError abError) {
+    public void dispatch(ABModel.ABCondition condition, String json, ABAction abAction, ABError abError) {
         List<ABModel> unfilterABlist = parseABModel(json);
         dispatch(condition, unfilterABlist, abAction, abError);
     }
@@ -30,14 +31,25 @@ public class ABHandler {
      * @param unfilterABlist 访问服务器返回的A/B测试描述ABModel对象
      * @param abAction       执行接口
      */
-    public void dispatch(ABModel.Condition condition, List<ABModel> unfilterABlist, ABAction abAction, ABError abError) {
+    public void dispatch(ABModel.ABCondition condition, List<ABModel> unfilterABlist, ABAction abAction, ABError abError) {
         try {
             if (condition == null) {
-                throw new NullPointerException("Condition instance is null.");
+                throw new NullPointerException("ABCondition instance is null.");
             }
 
             if (unfilterABlist == null || unfilterABlist.isEmpty()) {
                 throw new NullPointerException("ABModel instance is null.");
+            }
+
+            List<ABModel> ABTestNameFilters = filter(unfilterABlist, new Filter() {
+                @Override
+                public boolean check(ABModel abModel) {
+                    return abModel.name.equals(condition.getAbTestName());
+                }
+            });
+
+            if (ABTestNameFilters.isEmpty()) {
+                throw new NotThisTestException("Not for current Test");
             }
 
             /**
@@ -45,7 +57,7 @@ public class ABHandler {
              */
             long logTime = System.currentTimeMillis();
             //剔除平台不是Android的测试用例
-            List<ABModel> platformFilter = filter(unfilterABlist, new Filter() {
+            List<ABModel> platformFilter = filter(ABTestNameFilters, new Filter() {
                 @Override
                 public boolean check(ABModel abModel) {
                     return abModel.checkFlatForm();
@@ -66,6 +78,7 @@ public class ABHandler {
             if (timeFilter.isEmpty()) {
                 throw new ExecuteTimeErrorException("Not in abTesting time");
             }
+
 
             boolean ret = true;
             for (ABModel abModel : timeFilter) {
