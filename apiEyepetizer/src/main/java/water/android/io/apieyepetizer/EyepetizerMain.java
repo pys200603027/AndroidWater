@@ -29,8 +29,7 @@ public class EyepetizerMain {
         SampleHttp.init(BASE_URL);
 
 
-        EyepetizerService eyepetizerService = SampleHttp.getInstance().getRetrofit()
-                .create(EyepetizerService.class);
+        EyepetizerService eyepetizerService = SampleHttp.getInstance().getDefaultRetrofit().create(EyepetizerService.class);
         /**
          * 首页
          */
@@ -61,7 +60,6 @@ public class EyepetizerMain {
                 .subscribe(new Consumer<DiscoveryList>() {
                     @Override
                     public void accept(DiscoveryList discovery) throws Exception {
-
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -74,11 +72,11 @@ public class EyepetizerMain {
          */
         eyepetizerService.getDiscovery()
                 .flatMap(new Function<DiscoveryList, ObservableSource<DiscoveryList.TabInfoBean.TabListItem>>() {
-                    @Override
-                    public ObservableSource<DiscoveryList.TabInfoBean.TabListItem> apply(DiscoveryList discovery) throws Exception {
-                        List<DiscoveryList.TabInfoBean.TabListItem> tabList = discovery.tabInfo.tabList;
-                        return Observable.fromIterable(tabList);
-                    }
+                        @Override
+                        public ObservableSource<DiscoveryList.TabInfoBean.TabListItem> apply(DiscoveryList discovery) throws Exception {
+                            List<DiscoveryList.TabInfoBean.TabListItem> tabList = discovery.tabInfo.tabList;
+                            return Observable.fromIterable(tabList);
+                        }
                 }).map(new Function<DiscoveryList.TabInfoBean.TabListItem, ResponseBody>() {
             @Override
             public ResponseBody apply(DiscoveryList.TabInfoBean.TabListItem tabListItem) throws Exception {

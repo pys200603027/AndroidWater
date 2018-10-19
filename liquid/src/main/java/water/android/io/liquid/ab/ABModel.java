@@ -160,7 +160,7 @@ public class ABModel<T> {
         public static final String PROP_UID = "uid";
         public static final String PROP_FLAG = "flag";
         public static final String PROP_GENDER = "gender";
-        public static final String PROP_COSTOM = "costom";
+        public static final String PROP_CUSTOM = "custom";
 
         /**
          * op属性可能对应的值
@@ -190,8 +190,8 @@ public class ABModel<T> {
             return !values.contains(target);
         }
 
-        public static boolean checkoutGrater(int target, List<Integer> values) {
-            for (long l : values) {
+        public static boolean checkoutGrater(int target, List<Double> values) {
+            for (double l : values) {
                 if (target > l) {
                     return true;
                 }
@@ -199,8 +199,8 @@ public class ABModel<T> {
             return false;
         }
 
-        public static boolean checkoutLess(int target, List<Integer> values) {
-            for (long l : values) {
+        public static boolean checkoutLess(int target, List<Double> values) {
+            for (double l : values) {
                 if (target < l) {
                     return true;
                 }

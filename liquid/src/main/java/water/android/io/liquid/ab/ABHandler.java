@@ -20,8 +20,7 @@ public class ABHandler {
     private ABStrategy abStrategy = new ABStrategyImpl();
 
     public void dispatch(ABModel.ABCondition condition, String json, ABAction abAction, ABError abError) {
-        List<ABModel> unfilterABlist = parseABModel(json);
-        dispatch(condition, unfilterABlist, abAction, abError);
+        dispatch(condition, parseABModel(json), abAction, abError);
     }
 
     /**

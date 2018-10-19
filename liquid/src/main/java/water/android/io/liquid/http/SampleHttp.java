@@ -18,8 +18,7 @@ public class SampleHttp {
     /**
      * Mozilla/5.0 (Linux; Android 7.0; HUAWEI GRA-CL00 Build/HUAWEIGRA-CL00) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/37.0.0.0 Mobile Safari/537.36
      */
-
-    public static final String DEFAULT_USER_AGENT = "Mozilla/5.0 (Linux; Android 7.0; HUAWEI GRA-CL00 Build/HUAWEIGRA-CL00) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/37.0.0.0 Mobile Safari/537.36";
+    public static final String SIMULATOR_USER_AGENT = "Mozilla/5.0 (Linux; Android 7.0; HUAWEI GRA-CL00 Build/HUAWEIGRA-CL00) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/37.0.0.0 Mobile Safari/537.36";
     private static String baseURL = "";
 
     public static void init(String baseUrl) {
@@ -50,9 +49,6 @@ public class SampleHttp {
     private OkHttpClient okHttpClient;
 
     public Retrofit getRetrofit() {
-        if (retrofit == null) {
-            retrofit = getDefaultRetrofit();
-        }
         return retrofit;
     }
 
@@ -65,17 +61,30 @@ public class SampleHttp {
     }
 
     public OkHttpClient getDefaultOkHttpClient() {
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(getHttpLogInterceptor())
+                .addInterceptor(getSimulatorUserAgentInterceptor())
+                .build();
+        return okHttpClient;
+    }
+
+    public Interceptor getSimulatorUserAgentInterceptor() {
         Interceptor httpHeaderInterceptor = new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request request = chain.request()
                         .newBuilder()
                         .removeHeader("User-Agent")
-                        .addHeader("User-Agent", DEFAULT_USER_AGENT)
+                        .addHeader("User-Agent", SIMULATOR_USER_AGENT)
                         .build();
                 return chain.proceed(request);
             }
         };
+
+        return httpHeaderInterceptor;
+    }
+
+    public Interceptor getHttpLogInterceptor() {
         //打印retrofit日志
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
@@ -84,11 +93,7 @@ public class SampleHttp {
             }
         });
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor)
-                .addInterceptor(httpHeaderInterceptor)
-                .build();
-        return okHttpClient;
+        return loggingInterceptor;
     }
 
     public Retrofit getDefaultRetrofit() {

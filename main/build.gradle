@@ -3,6 +3,7 @@ apply plugin: 'java-library'
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':liquid')
+    testImplementation dependencie.test.junit
 }
 
 sourceCompatibility = "1.8"

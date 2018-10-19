@@ -24,6 +24,8 @@ public class ABSample2 {
         testPlatform();
         testFlag();
         testCostom();
+        testCustom2();
+        testFlag2();
 
         System.out.println(ABHandler.parseABModel("abc") == null);
     }
@@ -141,6 +143,26 @@ public class ABSample2 {
                 .setAbTestName("login");
         ABHandler abHandler = new ABHandler();
         abHandler.dispatch(condition, abModels, new TestABInterImpl(), new TestABErrorImpl());
+    }
+
+    public static void testCustom2() {
+        String json = "[{\"startTime\":1539676817000,\"value\":[true],\"name\":\"update\",\"prop\":\"flag\",\"op\":\"eq\",\"platform\":\"all\"},{\"expireTime\":1642297600000,\"startTime\":1539676817000,\"value\":[3],\"name\":\"guide_skip_button\",\"prop\":\"custom\",\"op\":\"gt\",\"platform\":\"all\"}]";
+
+        new ABHandler().dispatch(new ABModel.ABCondition()
+                        .setAbTestName("guide_skip_button")
+                        .setCostom("6")
+                , json, new TestABInterImpl(), new TestABErrorImpl());
+    }
+
+    public static void testFlag2() {
+        String json = "[" +
+                "{\"expireTime\":1642297600000,\"startTime\":1539676817000,\"value\":[true],\"name\":\"update\",\"prop\":\"flag\",\"op\":\"eq\",\"platform\":\"all\"}," +
+                "{\"expireTime\":1642297600000,\"startTime\":1539676817000,\"value\":[3],\"name\":\"guide_skip_button\",\"prop\":\"custom\",\"op\":\"gt\",\"platform\":\"all\"}" +
+                "]";
+
+        new ABHandler().dispatch(new ABModel.ABCondition()
+                        .setAbTestName("update")
+                , json, new TestABInterImpl(), new TestABErrorImpl());
     }
 
     static class TestABInterImpl implements ABHandler.ABAction {

@@ -41,7 +41,6 @@ public class OneArticle {
          * prev : 20180918
          * next : 20180920
          */
-
         public String curr;
         public String prev;
         public String next;

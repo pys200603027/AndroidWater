@@ -1,6 +1,5 @@
 package water.android.io.liquid.ab.strategy;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import water.android.io.liquid.ab.annotation.ABTesting;
@@ -38,15 +37,17 @@ public class ABStrategyImpl implements ABStrategy {
             System.out.println("123:dispatchProp->checkGender=" + ret);
 
         } else if (ABModel.Value.PROP_FLAG.equals(abModel.prop)) {
-
-            if (abModel.value.contains("true")) {
-                ret = true;
+            Object flag = abModel.value.get(0);
+            if (flag instanceof String) {
+                ret = ((String) flag).contains("true");
             } else {
-                ret = false;
+                ret = (boolean) flag;
             }
             System.out.println("123:dispatchProp->checkFlag=" + ret);
 
-        } else if (ABModel.Value.PROP_COSTOM.equals(abModel.prop)) {
+        } else if (ABModel.Value.PROP_CUSTOM.equals(abModel.prop)) {
+
+            System.out.println("123:dispatchProp->check->custom");
 
             if (abModel.checkIsParseToInt()) {
                 ret = commonCheckInt(condition.getCostom(), abModel.op, abModel.value);
@@ -107,15 +108,12 @@ public class ABStrategyImpl implements ABStrategy {
     }
 
 
-    private boolean commonCheckInt(String condition, String op, List<String> values) {
-        List<Integer> coverList = new ArrayList<>();
-        for (String s : values) {
-            coverList.add(Integer.parseInt(s));
-        }
+    private boolean commonCheckInt(String condition, String op, List values) {
+
         if (ABModel.Value.OP_GREATER.equals(op)) {
-            return ABModel.Op.checkoutGrater(Integer.parseInt(condition), coverList);
+            return ABModel.Op.checkoutGrater(Integer.parseInt(condition), values);
         } else if (ABModel.Value.OP_LESS.equals(op)) {
-            return ABModel.Op.checkoutLess(Integer.parseInt(condition), coverList);
+            return ABModel.Op.checkoutLess(Integer.parseInt(condition), values);
         }
         return false;
     }
