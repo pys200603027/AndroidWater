@@ -4,6 +4,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':liquid')
     testImplementation dependencie.test.junit
+    testImplementation dependencie.test.hamcrest
 }
 
 sourceCompatibility = "1.8"

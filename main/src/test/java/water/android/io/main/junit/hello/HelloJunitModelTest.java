@@ -1,8 +1,11 @@
-package water.android.io.main.junit;
+package water.android.io.main.junit.hello;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import water.android.io.main.junit.HelloJunitModel;
+
 import static org.junit.Assert.*;
 public class HelloJunitModelTest {
 

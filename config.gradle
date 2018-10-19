@@ -10,6 +10,7 @@ def test = [:]
 test.junit = "junit:junit:4.12"
 test.runner = "com.android.support.test:runner:1.0.2"
 test.espresso = "com.android.support.test.espresso:espresso-core:3.0.2"
+test.hamcrest = "org.hamcrest:hamcrest-junit:2.0.0.0"
 deps.test = test
 
 
@@ -26,11 +27,11 @@ deps.gson = "com.google.code.gson:gson:2.8.5"
 deps.okhttp = "com.squareup.okhttp3:okhttp:3.11.0"
 deps.okhttpLogger = "com.squareup.okhttp3:logging-interceptor:3.11.0"
 deps.utilcode = "com.blankj:utilcode:1.20.3"
-deps.klog="com.github.zhaokaiqiang.klog:library:1.6.0"
-deps.eventbus="org.greenrobot:eventbus:3.1.1"
+deps.klog = "com.github.zhaokaiqiang.klog:library:1.6.0"
+deps.eventbus = "org.greenrobot:eventbus:3.1.1"
 
 //ui
-deps.magicindicator="com.github.hackware1993:MagicIndicator:1.5.0"
+deps.magicindicator = "com.github.hackware1993:MagicIndicator:1.5.0"
 ext.dependencie = deps
 
 

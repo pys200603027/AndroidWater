@@ -1,7 +1,10 @@
 package water.android.io.main.test;
 
+import java.sql.SQLSyntaxErrorException;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
 
 import water.android.io.liquid.ab.ABHandler;
 import water.android.io.liquid.ab.ABModel;
@@ -9,7 +12,49 @@ import water.android.io.liquid.ab.test.UnitTestModel;
 import water.android.io.liquid.ab.annotation.ABTesting;
 
 public class ABSample2 {
+
+    public static class SerialExecutor {
+        final ArrayDeque<Runnable> mTasks = new ArrayDeque<Runnable>();
+        Runnable mActive;
+
+        public synchronized void execute(final Runnable r) {
+            mTasks.offer(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        r.run();
+                    } finally {
+                        scheduleNext();
+                    }
+                }
+            });
+            if (mActive == null) {
+                scheduleNext();
+            }
+        }
+
+        public synchronized void scheduleNext() {
+            if ((mActive = mTasks.poll()) != null) {
+                mActive.run();
+            }
+        }
+    }
+
     public static void main(String[] args) {
+
+
+        SerialExecutor serialExecutor = new SerialExecutor();
+
+        for (int i = 0; i < 10; i++) {
+            int finalI = i;
+            serialExecutor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println("huhhhhhhh i" + finalI);
+                }
+            });
+        }
+
 
         testUidAndGender();
         testUidAndGenderIn();

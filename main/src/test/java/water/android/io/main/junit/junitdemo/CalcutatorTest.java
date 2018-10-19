@@ -1,6 +1,8 @@
-package water.android.io.main.junit;
+package water.android.io.main.junit.junitdemo;
 
 import org.junit.Test;
+
+import water.android.io.main.junit.Calcutator;
 
 import static org.junit.Assert.*;
 
