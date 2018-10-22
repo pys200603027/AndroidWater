@@ -1,5 +1,7 @@
 package network;
 
+import com.google.gson.Gson;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -7,12 +9,15 @@ import org.junit.rules.ExpectedException;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Cache;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -29,6 +34,14 @@ import water.android.io.liquid.http.SampleHttp;
  * 针对OKHttp进行试用
  */
 public class OkHttpTest {
+
+    static class Gist {
+        Map<String, GistFile> files;
+    }
+
+    static class GistFile {
+        String content;
+    }
 
     private String testURL = "https://www.baidu.com";
     private String json = "{}";
@@ -344,32 +357,95 @@ public class OkHttpTest {
                 .build();
     }
 
-
     /**
-     * 测试执行线程时
+     * Call对象表示一个已经准备好可以执行的请求，用这个对象可以查询请求的执行状态，或者取消当前请求
      */
     @Test
-    public void testAyncThread() {
+    public void testCall14() throws IOException {
+        OkHttpClient okHttpClient = SampleHttp.getInstance().getDefaultOkHttpClient();
+        Request request = new Request.Builder()
+                .url("http://publicobject.com/helloworld.txt")
+                .build();
 
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < 100; i++) {
-                    System.out.println("Test aync..");
-                }
-                try {
-                    TimeUnit.SECONDS.sleep(4000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
+        Call call = okHttpClient.newCall(request);
 
-        new Thread(runnable).start();
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        Response response = call.execute();
+
+        assertTrue(call.isExecuted());
+
+        if (call.isExecuted()) {
+            Call reCall = okHttpClient.newCall(call.request());
+            Response re = reCall.execute();
+            assertTrue(re.isSuccessful());
+
         }
     }
+
+    /**
+     * 通过Gson解析json数据
+     */
+    @Test
+    public void testParseJson15() throws IOException {
+        OkHttpClient okHttpClient = SampleHttp.getInstance().getDefaultOkHttpClient();
+        Request request = new Request.Builder()
+                .url("https://api.github.com/gists/c2a7c39532239ff261be")
+                .build();
+        Response response = okHttpClient.newCall(request).execute();
+
+        assertTrue(response.isSuccessful());
+
+        Gson gson = new Gson();
+        Gist gist = gson.fromJson(response.body().charStream(), Gist.class);
+        for (Map.Entry<String, GistFile> entry : gist.files.entrySet()) {
+            System.out.println(entry.getKey());
+            System.out.println(entry.getValue().content);
+        }
+    }
+
+    /**
+     * 官方Demo
+     * Cache设置
+     */
+    @Test
+    public void testCacheControl16() throws IOException {
+        String path = System.getProperty("user.dir") + File.separator + "build" + File.separator + "cache";
+        File cacheDir = new File(path);
+        if (!cacheDir.exists()) {
+            cacheDir.mkdir();
+        }
+        assertTrue(cacheDir.exists());
+        int cacheSize = 10 * 1024 * 1024;//10MB
+        Cache cache = new Cache(cacheDir, cacheSize);
+
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .cache(cache)
+                .addNetworkInterceptor(SampleHttp.getHttpLogInterceptor())
+                .build();
+
+        Request request = new Request.Builder()
+                .url("http://publicobject.com/helloworld.txt")
+                .header("Cache-Control", "max-stale=3600")
+                .build();
+        Response response1 = okHttpClient.newCall(request).execute();
+
+        assertTrue(response1.isSuccessful());
+
+        String response1Body = response1.body().string();
+        System.out.println("Response 1 response:          " + response1);
+        System.out.println("Response 1 cache response:    " + response1.cacheResponse());
+        System.out.println("Response 1 network response:  " + response1.networkResponse());
+
+        Response response2 = okHttpClient.newCall(request).execute();
+
+        assertTrue(response2.isSuccessful());
+
+        String response2Body = response2.body().string();
+        System.out.println("Response 2 response:          " + response2);
+        System.out.println("Response 2 cache response:    " + response2.cacheResponse());
+        System.out.println("Response 2 network response:  " + response2.networkResponse());
+
+        System.out.println("Response 2 equals Response 1? " + response1Body.equals(response2Body));
+    }
+
+
 }

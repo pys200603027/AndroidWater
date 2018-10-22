@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 public class SampleTest {
 
@@ -63,5 +64,32 @@ public class SampleTest {
             return "0" + time;
         }
         return String.valueOf(time);
+    }
+
+    /**
+     * 测试执行线程时
+     */
+    @Test
+    public void testAyncThread() {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 100; i++) {
+                    System.out.println("Test aync..");
+                }
+                try {
+                    TimeUnit.SECONDS.sleep(4000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        new Thread(runnable).start();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
