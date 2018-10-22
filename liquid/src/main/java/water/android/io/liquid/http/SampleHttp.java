@@ -68,7 +68,7 @@ public class SampleHttp {
         return okHttpClient;
     }
 
-    public Interceptor getSimulatorUserAgentInterceptor() {
+    public static Interceptor getSimulatorUserAgentInterceptor() {
         Interceptor httpHeaderInterceptor = new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
@@ -84,7 +84,7 @@ public class SampleHttp {
         return httpHeaderInterceptor;
     }
 
-    public Interceptor getHttpLogInterceptor() {
+    public static Interceptor getHttpLogInterceptor() {
         //打印retrofit日志
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override

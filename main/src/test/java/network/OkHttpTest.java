@@ -16,11 +16,13 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
+import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okio.BufferedSink;
 import water.android.io.liquid.http.SampleHttp;
 
 /**
@@ -69,13 +71,16 @@ public class OkHttpTest {
     @Test
     public void testPostForm3() throws IOException {
         FormBody requestBody = new FormBody.Builder()
-                .add("name", "bug")
+                .add("search", "Jurassic Park")
                 .build();
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url(testURL).post(requestBody).build();
+        OkHttpClient client = SampleHttp.getInstance().getDefaultOkHttpClient();
+        Request request = new Request.Builder()
+                .url("https://en.wikipedia.org/w/index.php")
+                .post(requestBody)
+                .build();
         Response response = client.newCall(request).execute();
 
-        System.out.println(response.code());
+        assertTrue(response.isSuccessful());
     }
 
     /**
@@ -189,6 +194,156 @@ public class OkHttpTest {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 官方Demo，关于返回值String
+     * 对小文件来说string()方法响应实体是方便和高效的.但如果响应实体很大(大于1 MiB),避免使用string(),因为它会将整个文档加载到内存中.在这种情况下,更倾向于用流处理实体
+     */
+    @Test
+    public void testString8() throws IOException {
+        OkHttpClient okHttpClient = SampleHttp.getInstance().getDefaultOkHttpClient();
+        Request request = new Request.Builder()
+                .url("http://publicobject.com/helloworld.txt")
+                .build();
+
+        Response response = okHttpClient.newCall(request).execute();
+
+        assertTrue(response.isSuccessful());
+
+        Headers headers = response.headers();
+        for (int i = 0; i < headers.size(); i++) {
+            System.out.println(headers.name(i) + ": " + headers.value(i));
+        }
+
+        System.out.println(response.body().toString());
+    }
+
+    /**
+     * 官方Demo
+     * 设置Http头信息
+     */
+    @Test
+    public void testHeader9() throws IOException {
+        OkHttpClient okHttpClient = SampleHttp.getInstance().getDefaultOkHttpClient();
+        Request request = new Request.Builder()
+                .url("https://api.github.com/repos/square/okhttp/issues")
+                .header("User-Agent", "OkHttp Headers.java")
+                .addHeader("Accept", "application/json; q=0.5")
+                .addHeader("Accept", "application/vnd.github.v3+json")
+                .build();
+
+        Response response = okHttpClient.newCall(request).execute();
+
+        assertTrue(response.isSuccessful());
+
+        System.out.println("Server: " + response.header("Server"));
+        System.out.println("Date: " + response.header("Date"));
+        System.out.println("Vary: " + response.header("Vary"));
+    }
+
+    /**
+     * 官方Demo：交一个markdown文档发送给web服务
+     * 扩展：提交Json
+     */
+    @Test
+    public void testPostString10() throws IOException {
+        String postBody = ""
+                + "Releases\n"
+                + "--------\n"
+                + "\n"
+                + " * _1.0_ May 6, 2013\n"
+                + " * _1.1_ June 15, 2013\n"
+                + " * _1.2_ August 11, 2013\n";
+        MediaType typeMarkDown = MediaType.parse("text/x-markdown; charset=utf-8");
+        OkHttpClient okHttpClient = SampleHttp.getInstance().getDefaultOkHttpClient();
+        Request request = new Request.Builder()
+                .url("https://api.github.com/markdown/raw")
+                .post(RequestBody.create(typeMarkDown, postBody))
+                .build();
+
+        Response response = okHttpClient.newCall(request).execute();
+
+        assertTrue(response.isSuccessful());
+
+    }
+
+    /**
+     * 官方Demo：作为一个流post到web服务器
+     */
+    @Test
+    public void testPostStream11() throws IOException {
+        MediaType typeMarkDown = MediaType.parse("text/x-markdown; charset=utf-8");
+        OkHttpClient okHttpClient = SampleHttp.getInstance().getDefaultOkHttpClient();
+        /**
+         * 关键点在于构建requestBody
+         */
+        RequestBody requestBody = new RequestBody() {
+            private String factor(int n) {
+                for (int i = 2; i < n; i++) {
+                    int x = n / i;
+                    if (x * i == n) return factor(x) + " × " + i;
+                }
+                return Integer.toString(n);
+            }
+
+            @Override
+            public MediaType contentType() {
+                return typeMarkDown;
+            }
+
+            @Override
+            public void writeTo(BufferedSink sink) throws IOException {
+                sink.writeUtf8("Numbers\n");
+                sink.writeUtf8("-------\n");
+
+                for (int i = 2; i <= 997; i++) {
+                    sink.writeUtf8(String.format(" * %s = %s\n", i, factor(i)));
+                }
+            }
+        };
+
+        Request request = new Request.Builder()
+                .url("https://api.github.com/markdown/raw")
+                .post(requestBody)
+                .build();
+
+        Response response = okHttpClient.newCall(request).execute();
+        assertTrue(response.isSuccessful());
+    }
+
+    /**
+     * 关键字:retryOnConnectionFailure
+     */
+    @Test
+    public void testRetry12() throws IOException {
+        OkHttpClient okHttpClient = SampleHttp.getInstance().getDefaultOkHttpClient().newBuilder()
+                .connectTimeout(1, TimeUnit.SECONDS)
+                .readTimeout(3, TimeUnit.SECONDS)
+                .writeTimeout(3, TimeUnit.SECONDS)
+                .retryOnConnectionFailure(true)
+                .build();
+
+        Request request = new Request.Builder()
+                .url("http://publicobject.com/helloworld.txt")
+                .build();
+
+        Response response = okHttpClient.newCall(request).execute();
+
+        assertTrue(response.isSuccessful());
+
+
+    }
+
+    /**
+     * 对一些请求进行特殊定制okHttp
+     */
+    @Test
+    public void testNewBuilder13() {
+        OkHttpClient okHttpClient = SampleHttp.getInstance().getDefaultOkHttpClient().newBuilder()
+                .readTimeout(3, TimeUnit.SECONDS)
+                .build();
+    }
+
 
     /**
      * 测试执行线程时
