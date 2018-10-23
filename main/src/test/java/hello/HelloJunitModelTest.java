@@ -1,4 +1,4 @@
-package water.android.io.main.junit.hello;
+package hello;
 
 import org.junit.After;
 import org.junit.Before;

@@ -1,4 +1,4 @@
-package water.android.io.main.junit.sample;
+package sample;
 
 import org.junit.Test;
 

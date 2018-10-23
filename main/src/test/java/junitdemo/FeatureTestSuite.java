@@ -1,9 +1,9 @@
-package water.android.io.main.junit.junitdemo;
+package junitdemo;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-import water.android.io.main.junit.hello.HelloJunitModelTest;
+import hello.HelloJunitModelTest;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses(

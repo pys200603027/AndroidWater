@@ -1,4 +1,4 @@
-package water.android.io.main.junit.junitdemo;
+package junitdemo;
 
 import org.junit.FixMethodOrder;
 import org.junit.Test;

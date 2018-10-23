@@ -1,4 +1,4 @@
-package water.android.io.main.junit.junitdemo;
+package junitdemo;
 
 import org.hamcrest.core.CombinableMatcher;
 import org.junit.Test;

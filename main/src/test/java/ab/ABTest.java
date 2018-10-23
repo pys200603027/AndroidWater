@@ -1,6 +1,5 @@
-package water.android.io.main.junit.ab;
+package ab;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import water.android.io.liquid.ab.ABHandler;
