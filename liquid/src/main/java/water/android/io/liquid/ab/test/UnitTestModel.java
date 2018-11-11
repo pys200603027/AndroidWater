@@ -9,8 +9,8 @@ import water.android.io.liquid.ab.ABModel;
  */
 public class UnitTestModel {
 
-    public static ABModel<String> makeObjectA() {
-        ABModel<String> expParam = new ABModel();
+    public static ABModel makeObjectA() {
+        ABModel expParam = new ABModel();
         expParam.expireTime = 123123123;
         expParam.name = "login";
         expParam.prop = "uid";
@@ -26,8 +26,8 @@ public class UnitTestModel {
         return expParam;
     }
 
-    public static ABModel<String> makeObjectB() {
-        ABModel<String> expParam = new ABModel();
+    public static ABModel makeObjectB() {
+        ABModel expParam = new ABModel();
         expParam.expireTime = 123123123;
         expParam.name = "login";
         expParam.prop = "uid";
@@ -44,8 +44,8 @@ public class UnitTestModel {
         return expParam;
     }
 
-    public static ABModel<String> makeObjectC() {
-        ABModel<String> expParam = new ABModel();
+    public static ABModel makeObjectC() {
+        ABModel expParam = new ABModel();
         expParam.expireTime = 123123123;
         expParam.name = "update";
         expParam.prop = "gender";
@@ -59,8 +59,8 @@ public class UnitTestModel {
         return expParam;
     }
 
-    public static ABModel<String> makeObjectD() {
-        ABModel<String> expParam = new ABModel();
+    public static ABModel makeObjectD() {
+        ABModel expParam = new ABModel();
         expParam.expireTime = 123123123;
         expParam.name = "login";
         expParam.prop = "gender";
@@ -74,8 +74,8 @@ public class UnitTestModel {
         return expParam;
     }
 
-    public static ABModel<String> makeObjectE() {
-        ABModel<String> expParam = new ABModel();
+    public static ABModel makeObjectE() {
+        ABModel expParam = new ABModel();
         expParam.expireTime = 123123123;
         expParam.name = "login";
         expParam.prop = "gender";
@@ -88,8 +88,8 @@ public class UnitTestModel {
         return expParam;
     }
 
-    public static ABModel<String> makeObjectF() {
-        ABModel<String> expParam = new ABModel();
+    public static ABModel makeObjectF() {
+        ABModel expParam = new ABModel();
         expParam.expireTime = 123123123;
         expParam.name = "login";
         expParam.prop = "uid";
@@ -106,8 +106,8 @@ public class UnitTestModel {
         return expParam;
     }
 
-    public static ABModel<String> makeObjectG() {
-        ABModel<String> expParam = new ABModel();
+    public static ABModel makeObjectG() {
+        ABModel expParam = new ABModel();
         expParam.expireTime = 123123123;
         expParam.name = "login";
         expParam.prop = "flag";
@@ -121,8 +121,8 @@ public class UnitTestModel {
         return expParam;
     }
 
-    public static ABModel<String> makeObjectI() {
-        ABModel<String> expParam = new ABModel();
+    public static ABModel makeObjectI() {
+        ABModel expParam = new ABModel();
         expParam.expireTime = 123123123;
         expParam.name = "login";
         expParam.prop = "custom";

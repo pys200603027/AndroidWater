@@ -22,18 +22,95 @@ public class ABTest {
         new ABHandler().dispatch(new ABModel.ABCondition()
                         .setAbTestName("guide_skip_button")
                         .setCostom("6")
-                , json, new ABHandler.ABAction() {
+                , json,
+                result -> System.out.println("123, result:" + result),
+                e -> e.printStackTrace());
+    }
+
+    @Test
+    public void testCreateTime() {
+        String json = "[{\n" +
+                "    \"name\": \"room_auto_recording\",\n" +
+                "    \"prop\": \"uid\",\n" +
+                "    \"op\": \"include\",\n" +
+                "    \"startTime\": 1541913295000,\n" +
+                "    \"expireTime\": 1857532495000,\n" +
+                "    \"value\": [\"c\", \"d\", \"e\", \"f\"]\n" +
+                "  }, {\n" +
+                "    \"name\": \"user_create_time\",\n" +
+                "    \"prop\": \"userCreateTime\",\n" +
+                "    \"op\": \"gt\",\n" +
+                "    \"startTime\": 1541913295000,\n" +
+                "    \"expireTime\": 1857532495000,\n" +
+                "    \"value\": [1541905616000]\n" +
+                "  }]";
+        new ABHandler().dispatch(
+                new ABModel.ABCondition().setUserCreateTime("1857532495000").setAbTestName("user_create_time"),
+                json,
+                new ABHandler.ABAction() {
                     @Override
                     public void run(boolean result) {
-                        System.out.println("123, result:" + result);
+                        System.out.println(result);
                     }
-                }, new ABHandler.ABError() {
+                },
+                new ABHandler.ABError() {
                     @Override
                     public void throwable(Exception e) {
                         e.printStackTrace();
                     }
-                });
+                }
+        );
+
     }
+
+    @Test
+    public void testParstInt() {
+        Long l = Long.parseLong("1857532495000");
+        System.out.println(l);
+
+        int i = Integer.parseInt("1857532495000");
+
+    }
+
+    @Test
+    public void testAutoRecording() {
+        String json = "[{\n" +
+                "    \"name\": \"room_auto_recording\",\n" +
+                "    \"prop\": \"uid\",\n" +
+                "    \"op\": \"include\",\n" +
+                "    \"startTime\": 1541905616000,\n" +
+                "    \"expireTime\": 1641905616000,\n" +
+                "    \"value\": [\"c\", \"d\", \"e\", \"f\"]\n" +
+                "  }, {\n" +
+                "    \"name\": \"room_auto_recording\",\n" +
+                "    \"prop\": \"userCreateTime\",\n" +
+                "    \"op\": \"gt\",\n" +
+                "    \"startTime\": 1541905616000,\n" +
+                "    \"expireTime\": 1641905616000,\n" +
+                "    \"value\": [\"1541905616000\"]\n" +
+                "  }]";
+
+        new ABHandler().dispatch(
+                new ABModel.ABCondition()
+                        .setAbTestName("room_auto_recording")
+                        .setUserCreateTime("1857532495000")
+                        .setUid("acc"),
+                json,
+                new ABHandler.ABAction() {
+                    @Override
+                    public void run(boolean result) {
+                        System.out.println(result);
+                    }
+                },
+                new ABHandler.ABError() {
+                    @Override
+                    public void throwable(Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+        );
+    }
+
 
     public static void main(String[] args) {
         new ABTest().testCustom();

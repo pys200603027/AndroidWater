@@ -2,7 +2,7 @@ package water.android.io.liquid.ab;
 
 import java.util.List;
 
-public class ABModel<T> {
+public class ABModel {
     /**
      * 平台
      */
@@ -26,7 +26,7 @@ public class ABModel<T> {
      */
     public String prop;
     public String op;
-    public List<T> value;
+    public List<String> value;
 
 
     /**
@@ -92,6 +92,11 @@ public class ABModel<T> {
 
         private String costom;
 
+        /**
+         * 用户创建时间
+         */
+        private String userCreateTime;
+
 
         public String getCostom() {
             return costom;
@@ -128,6 +133,15 @@ public class ABModel<T> {
             this.gender = gender;
             return this;
         }
+
+        public String getUserCreateTime() {
+            return userCreateTime;
+        }
+
+        public ABCondition setUserCreateTime(String userCreateTime) {
+            this.userCreateTime = userCreateTime;
+            return this;
+        }
     }
 
     /**
@@ -157,22 +171,24 @@ public class ABModel<T> {
         /**
          * prop属性可能对应的值
          */
-        public static final String PROP_UID = "uid";
-        public static final String PROP_FLAG = "flag";
-        public static final String PROP_GENDER = "gender";
-        public static final String PROP_CUSTOM = "custom";
+        String PROP_UID = "uid";
+        String PROP_FLAG = "flag";
+        String PROP_GENDER = "gender";
+        String PROP_CUSTOM = "custom";
+        String PROP_USER_CREATE_TIME = "userCreateTime";
+
 
         /**
          * op属性可能对应的值
          */
-        public static final String OP_IN = "include";
-        public static final String OP_OUT = "exclude";
-        public static final String OP_EQ = "eq";
-        public static final String OP_GREATER = "gt";
-        public static final String OP_LESS = "lt";
+        String OP_IN = "include";
+        String OP_OUT = "exclude";
+        String OP_EQ = "eq";
+        String OP_GREATER = "gt";
+        String OP_LESS = "lt";
 
-        public static final String FLATFORM_ANDROID = "android";
-        public static final String FLATFORM_ALL = "all";
+        String FLATFORM_ANDROID = "android";
+        String FLATFORM_ALL = "all";
     }
 
 
@@ -190,8 +206,8 @@ public class ABModel<T> {
             return !values.contains(target);
         }
 
-        public static boolean checkoutGrater(int target, List<Double> values) {
-            for (double l : values) {
+        public static boolean checkoutGrater(long target, List<Long> values) {
+            for (Long l : values) {
                 if (target > l) {
                     return true;
                 }
@@ -199,8 +215,8 @@ public class ABModel<T> {
             return false;
         }
 
-        public static boolean checkoutLess(int target, List<Double> values) {
-            for (double l : values) {
+        public static boolean checkoutLess(long target, List<Long> values) {
+            for (Long l : values) {
                 if (target < l) {
                     return true;
                 }

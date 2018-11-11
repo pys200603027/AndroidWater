@@ -16,7 +16,7 @@ public class SampleTest {
         System.out.println(System.currentTimeMillis());
         //2018-10-23 18:01:56
 //        long timeLeft = 1540288916000L - System.currentTimeMillis();
-        long timeLeft = 1540116116000L - System.currentTimeMillis();
+        long timeLeft = 1571831637000L - System.currentTimeMillis();
         System.out.println(timeLeft);
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
@@ -25,7 +25,7 @@ public class SampleTest {
 
 
         while(true){
-            long l = 1540115221000L - System.currentTimeMillis();
+            long l = 1571831637000L - System.currentTimeMillis();
             System.out.println(timeFormat(l));
             try {
                 Thread.sleep(1000);

@@ -109,6 +109,8 @@ public class SampleHttp {
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
+
+
         return retrofit;
     }
 }

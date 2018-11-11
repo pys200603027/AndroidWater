@@ -447,5 +447,23 @@ public class OkHttpTest {
         System.out.println("Response 2 equals Response 1? " + response1Body.equals(response2Body));
     }
 
+    /**
+     * 监听下载进度解决方案
+     * https://github.com/JessYanCoding/ProgressManager/blob/master/README-zh.md
+     */
+    @Test
+    public void testOkHttpProgress17() {
+
+    }
+
+    /**
+     * Retrofit+Rxjava+okhttp终极封装(Gson方案)
+     * https://github.com/wzgiceman/RxjavaRetrofitDemo-master
+     */
+    @Test
+    public void testOkHttpWrapper18() {
+
+    }
+
 
 }

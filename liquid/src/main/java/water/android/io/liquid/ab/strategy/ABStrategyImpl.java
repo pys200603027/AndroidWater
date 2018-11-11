@@ -1,5 +1,6 @@
 package water.android.io.liquid.ab.strategy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import water.android.io.liquid.ab.annotation.ABTesting;
@@ -21,42 +22,80 @@ public class ABStrategyImpl implements ABStrategy {
     @Override
     public boolean dispatchProp(ABModel.ABCondition condition, ABModel abModel) {
         boolean ret = false;
+        ABModel tmpModle = abModel;
+        switch (abModel.prop) {
+            case ABModel.Value.PROP_UID:
+                ret = checkUid(condition.getUid(), tmpModle);
+                System.out.println("123:dispatchProp->checkUid=" + ret);
+                break;
+            case ABModel.Value.PROP_GENDER:
+                ret = checkGender(condition.getGender(), tmpModle);
+                System.out.println("123:dispatchProp->checkGender=" + ret);
+                break;
+            case ABModel.Value.PROP_FLAG:
+                Object flag = abModel.value.get(0);
+                if (flag instanceof String) {
+                    ret = ((String) flag).contains("true");
+                } else {
+                    ret = (boolean) flag;
+                }
+                System.out.println("123:dispatchProp->checkFlag=" + ret);
+                break;
+            case ABModel.Value.PROP_CUSTOM:
+                System.out.println("123:dispatchProp->check->custom");
+
+                if (abModel.checkIsParseToInt()) {
+                    ret = commonCheckInt(condition.getCostom(), abModel.op, abModel.value);
+                } else {
+                    ret = commonCheckString(condition.getCostom(), abModel.op, abModel.value);
+                }
+                System.out.println("123:dispatchProp->checkCostom=" + ret);
+                break;
+            case ABModel.Value.PROP_USER_CREATE_TIME:
+                if (abModel.checkIsParseToInt()) {
+                    ret = commonCheckInt(condition.getUserCreateTime(), abModel.op, abModel.value);
+                } else {
+                    ret = commonCheckString(condition.getUserCreateTime(), abModel.op, abModel.value);
+                }
+                break;
+            default:
+        }
         /**
          * 通过属性prop分发到不同执行策略
          */
-        if (abModel.prop.equals(ABModel.Value.PROP_UID)) {
-
-            ABModel<String> tmpModle = abModel;
-            ret = checkUid(condition.getUid(), tmpModle);
-            System.out.println("123:dispatchProp->checkUid=" + ret);
-
-        } else if (abModel.prop.equals(ABModel.Value.PROP_GENDER)) {
-
-            ABModel<String> tmpModle = abModel;
-            ret = checkGender(condition.getGender(), tmpModle);
-            System.out.println("123:dispatchProp->checkGender=" + ret);
-
-        } else if (ABModel.Value.PROP_FLAG.equals(abModel.prop)) {
-            Object flag = abModel.value.get(0);
-            if (flag instanceof String) {
-                ret = ((String) flag).contains("true");
-            } else {
-                ret = (boolean) flag;
-            }
-            System.out.println("123:dispatchProp->checkFlag=" + ret);
-
-        } else if (ABModel.Value.PROP_CUSTOM.equals(abModel.prop)) {
-
-            System.out.println("123:dispatchProp->check->custom");
-
-            if (abModel.checkIsParseToInt()) {
-                ret = commonCheckInt(condition.getCostom(), abModel.op, abModel.value);
-            } else {
-                ret = commonCheckString(condition.getCostom(), abModel.op, abModel.value);
-            }
-
-            System.out.println("123:dispatchProp->checkCostom=" + ret);
-        }
+//        if (abModel.prop.equals(ABModel.Value.PROP_UID)) {
+//
+//            ABModel<String> tmpModle = abModel;
+//            ret = checkUid(condition.getUid(), tmpModle);
+//            System.out.println("123:dispatchProp->checkUid=" + ret);
+//
+//        } else if (abModel.prop.equals(ABModel.Value.PROP_GENDER)) {
+//
+//            ABModel<String> tmpModle = abModel;
+//            ret = checkGender(condition.getGender(), tmpModle);
+//            System.out.println("123:dispatchProp->checkGender=" + ret);
+//
+//        } else if (ABModel.Value.PROP_FLAG.equals(abModel.prop)) {
+//            Object flag = abModel.value.get(0);
+//            if (flag instanceof String) {
+//                ret = ((String) flag).contains("true");
+//            } else {
+//                ret = (boolean) flag;
+//            }
+//            System.out.println("123:dispatchProp->checkFlag=" + ret);
+//
+//        } else if (ABModel.Value.PROP_CUSTOM.equals(abModel.prop)) {
+//
+//            System.out.println("123:dispatchProp->check->custom");
+//
+//            if (abModel.checkIsParseToInt()) {
+//                ret = commonCheckInt(condition.getCostom(), abModel.op, abModel.value);
+//            } else {
+//                ret = commonCheckString(condition.getCostom(), abModel.op, abModel.value);
+//            }
+//
+//            System.out.println("123:dispatchProp->checkCostom=" + ret);
+//        }
         return ret;
     }
 
@@ -68,7 +107,7 @@ public class ABStrategyImpl implements ABStrategy {
      */
     @ABTestingStratedy(name = {"update"})
     @ABTesting(prop = "uid", op = {ABModel.Value.OP_IN, ABModel.Value.OP_OUT, ABModel.Value.OP_EQ})
-    public boolean checkUid(String condition, ABModel<String> abModel) {
+    public boolean checkUid(String condition, ABModel abModel) {
         List<String> values = abModel.value;
         String lastS = condition.substring(condition.length() - 1, condition.length());
 
@@ -87,7 +126,7 @@ public class ABStrategyImpl implements ABStrategy {
      * @return
      */
     @ABTesting(prop = "gender", op = "eq")
-    public boolean checkGender(String condition, ABModel<String> abModel) {
+    public boolean checkGender(String condition, ABModel abModel) {
         List<String> values = abModel.value;
         return commonCheckString(condition, abModel.op, values);
     }
@@ -108,12 +147,15 @@ public class ABStrategyImpl implements ABStrategy {
     }
 
 
-    private boolean commonCheckInt(String condition, String op, List values) {
-
+    private boolean commonCheckInt(String condition, String op, List<String> values) {
+        List<Long> flatValues = new ArrayList<>();
+        for (String s : values) {
+            flatValues.add(Long.parseLong(s));
+        }
         if (ABModel.Value.OP_GREATER.equals(op)) {
-            return ABModel.Op.checkoutGrater(Integer.parseInt(condition), values);
+            return ABModel.Op.checkoutGrater(Long.parseLong(condition), flatValues);
         } else if (ABModel.Value.OP_LESS.equals(op)) {
-            return ABModel.Op.checkoutLess(Integer.parseInt(condition), values);
+            return ABModel.Op.checkoutLess(Integer.parseInt(condition), flatValues);
         }
         return false;
     }
