@@ -111,6 +111,71 @@ public class ABTest {
         );
     }
 
+    @Test
+    public void testSkipFlatForm() {
+        String json = "[{\n" +
+                "    \"name\": \"room_auto_recording\",\n" +
+                "    \"prop\": \"uid\",\n" +
+                "    \"op\": \"include\",\n" +
+                "    \"startTime\": 1541905616000,\n" +
+                "    \"expireTime\": 1641905616000,\n" +
+                "    \"value\": [\"1\", \"2\", \"3\", \"4\", \"5\", \"a\", \"b\", \"c\", \"d\", \"e\", \"f\"]\n" +
+                "  }, {\n" +
+                "    \"name\": \"room_auto_recording\",\n" +
+                "    \"prop\": \"userCreateTime\",\n" +
+                "    \"op\": \"gt\",\n" +
+                "    \"startTime\": 1541905616000,\n" +
+                "    \"expireTime\": 1641905616000,\n" +
+                "    \"value\": [\"1541905616000\"]\n" +
+                "  }, {\n" +
+                "    \"name\": \"guide_skip_button\",\n" +
+                "    \"prop\": \"uid\",\n" +
+                "    \"platform\": \"all\",\n" +
+                "    \"op\": \"include\",\n" +
+                "    \"startTime\": 1541905616000,\n" +
+                "    \"expireTime\": 1641905616000,\n" +
+                "    \"value\": [\"1\", \"2\", \"3\", \"4\", \"5\", \"a\", \"b\", \"c\", \"d\", \"e\", \"f\"]\n" +
+                "  }, {\n" +
+                "    \"name\": \"guide_skip_button\",\n" +
+                "    \"prop\": \"userCreateTime\",\n" +
+                "    \"platform\": \"all\",\n" +
+                "    \"op\": \"gt\",\n" +
+                "    \"startTime\": 1541905616000,\n" +
+                "    \"expireTime\": 1641905616000,\n" +
+                "    \"value\": [\"1541912690000\"]\n" +
+                "  }\n" +
+                "  , {\n" +
+                "    \"name\": \"guide_skip_button\",\n" +
+                "    \"prop\": \"custom\",\n" +
+                "    \"platform\": \"all\",\n" +
+                "    \"op\": \"gt\",\n" +
+                "    \"startTime\": 1541905616000,\n" +
+                "    \"expireTime\": 1641905616000,\n" +
+                "    \"value\": [\"0\"]\n" +
+                "  }]";
+
+        new ABHandler().dispatch(
+                new ABModel.ABCondition()
+                        .setAbTestName("guide_skip_button")
+                        .setUserCreateTime("1857532495000")
+                        .setCostom("6")
+                        .setUid("acc"),
+                json,
+                new ABHandler.ABAction() {
+                    @Override
+                    public void run(boolean result) {
+                        System.out.println(result);
+                    }
+                },
+                new ABHandler.ABError() {
+                    @Override
+                    public void throwable(Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+        );
+    }
+
 
     public static void main(String[] args) {
         new ABTest().testCustom();

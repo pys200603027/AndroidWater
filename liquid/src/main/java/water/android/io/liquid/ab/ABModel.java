@@ -39,10 +39,11 @@ public class ABModel {
     }
 
     public boolean checkFlatForm() {
-        if (platform == null || platform.isEmpty() || Value.FLATFORM_ANDROID.equals(platform) || Value.FLATFORM_ALL.equals(platform)) {
-            return true;
-        }
-        return false;
+//        if (platform == null || platform.isEmpty() || Value.FLATFORM_ANDROID.equals(platform) || Value.FLATFORM_ALL.equals(platform)) {
+//            return true;
+//        }
+//        return false;
+        return true;
     }
 
     @Deprecated
@@ -208,7 +209,7 @@ public class ABModel {
 
         public static boolean checkoutGrater(long target, List<Long> values) {
             for (Long l : values) {
-                if (target > l) {
+                if (target >= l) {
                     return true;
                 }
             }
@@ -217,7 +218,7 @@ public class ABModel {
 
         public static boolean checkoutLess(long target, List<Long> values) {
             for (Long l : values) {
-                if (target < l) {
+                if (target <= l) {
                     return true;
                 }
             }
