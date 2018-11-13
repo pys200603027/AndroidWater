@@ -52,11 +52,13 @@ public class ABStrategyImpl implements ABStrategy {
                 System.out.println("123:dispatchProp->checkCostom=" + ret);
                 break;
             case ABModel.Value.PROP_USER_CREATE_TIME:
+                System.out.println("123:dispatchProp->check->userCreateTime");
                 if (abModel.checkIsParseToInt()) {
                     ret = commonCheckInt(condition.getUserCreateTime(), abModel.op, abModel.value);
                 } else {
                     ret = commonCheckString(condition.getUserCreateTime(), abModel.op, abModel.value);
                 }
+                System.out.println("123:dispatchProp->check->userCreateTime="+ret);
                 break;
             default:
         }

@@ -176,6 +176,31 @@ public class ABTest {
         );
     }
 
+    @Test
+    public void checkSkipGuid() {
+        String json = "[{\"name\":\"room_auto_recording\",\"prop\":\"uid\",\"op\":\"include\",\"startTime\":1541905616000,\"expireTime\":1641905616000,\"value\":[\"1\",\"2\",\"3\",\"4\",\"5\",\"a\",\"b\",\"c\",\"d\",\"e\",\"f\"]},{\"name\":\"room_auto_recording\",\"prop\":\"userCreateTime\",\"op\":\"gt\",\"startTime\":1541905616000,\"expireTime\":1641905616000,\"value\":[\"1541905616000\"]},{\"name\":\"guide_skip_button\",\"prop\":\"uid\",\"platform\":\"all\",\"op\":\"include\",\"startTime\":1541905616000,\"expireTime\":1641905616000,\"value\":[\"1\",\"2\",\"3\",\"4\",\"5\",\"a\",\"b\",\"c\",\"d\",\"e\",\"f\"]},{\"name\":\"guide_skip_button\",\"prop\":\"userCreateTime\",\"platform\":\"all\",\"op\":\"gt\",\"startTime\":1541905616000,\"expireTime\":1641905616000,\"value\":[\"1541912690000\"]},{\"name\":\"guide_skip_button\",\"prop\":\"custom\",\"platform\":\"all\",\"op\":\"gt\",\"startTime\":1541905616000,\"expireTime\":1641905616000,\"value\":[\"0\"]}]";
+        new ABHandler().dispatch(
+                new ABModel.ABCondition()
+                        .setAbTestName("guide_skip_button")
+                        .setUserCreateTime("1541401547000")
+                        .setCostom("3")
+                        .setUid("cf27cd50-79d7-4663-9cc3-0f7f2a131cb5"),
+                json,
+                new ABHandler.ABAction() {
+                    @Override
+                    public void run(boolean result) {
+                        System.out.println(result);
+                    }
+                },
+                new ABHandler.ABError() {
+                    @Override
+                    public void throwable(Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+        );
+    }
+
 
     public static void main(String[] args) {
         new ABTest().testCustom();

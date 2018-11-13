@@ -209,7 +209,7 @@ public class ABModel {
 
         public static boolean checkoutGrater(long target, List<Long> values) {
             for (Long l : values) {
-                if (target >= l) {
+                if (target > l) {
                     return true;
                 }
             }
@@ -218,7 +218,7 @@ public class ABModel {
 
         public static boolean checkoutLess(long target, List<Long> values) {
             for (Long l : values) {
-                if (target <= l) {
+                if (target < l) {
                     return true;
                 }
             }
