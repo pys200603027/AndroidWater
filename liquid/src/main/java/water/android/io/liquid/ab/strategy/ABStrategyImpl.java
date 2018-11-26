@@ -62,42 +62,6 @@ public class ABStrategyImpl implements ABStrategy {
                 break;
             default:
         }
-        /**
-         * 通过属性prop分发到不同执行策略
-         */
-//        if (abModel.prop.equals(ABModel.Value.PROP_UID)) {
-//
-//            ABModel<String> tmpModle = abModel;
-//            ret = checkUid(condition.getUid(), tmpModle);
-//            System.out.println("123:dispatchProp->checkUid=" + ret);
-//
-//        } else if (abModel.prop.equals(ABModel.Value.PROP_GENDER)) {
-//
-//            ABModel<String> tmpModle = abModel;
-//            ret = checkGender(condition.getGender(), tmpModle);
-//            System.out.println("123:dispatchProp->checkGender=" + ret);
-//
-//        } else if (ABModel.Value.PROP_FLAG.equals(abModel.prop)) {
-//            Object flag = abModel.value.get(0);
-//            if (flag instanceof String) {
-//                ret = ((String) flag).contains("true");
-//            } else {
-//                ret = (boolean) flag;
-//            }
-//            System.out.println("123:dispatchProp->checkFlag=" + ret);
-//
-//        } else if (ABModel.Value.PROP_CUSTOM.equals(abModel.prop)) {
-//
-//            System.out.println("123:dispatchProp->check->custom");
-//
-//            if (abModel.checkIsParseToInt()) {
-//                ret = commonCheckInt(condition.getCostom(), abModel.op, abModel.value);
-//            } else {
-//                ret = commonCheckString(condition.getCostom(), abModel.op, abModel.value);
-//            }
-//
-//            System.out.println("123:dispatchProp->checkCostom=" + ret);
-//        }
         return ret;
     }
 
