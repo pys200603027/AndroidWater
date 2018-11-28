@@ -12,7 +12,6 @@ import water.android.io.water.base.R;
  * 带RefreshLayout的WebView
  */
 public class SampleWebViewActivity extends BaseActivity {
-    SampleWebViewFragment fragment;
 
     public static void startSampleWebViewActivity(Context context, String url) {
         Intent intent = new Intent(context, SampleWebViewActivity.class);
@@ -25,8 +24,7 @@ public class SampleWebViewActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         String url = getIntent().getStringExtra("url");
         android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
-        fm
-                .beginTransaction()
+        fm.beginTransaction()
                 .add(R.id.fragment_container, SampleWebViewFragment.newInstance(url))
                 .commit();
     }

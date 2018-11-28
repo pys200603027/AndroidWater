@@ -20,6 +20,5 @@ public class MainActivity extends AppCompatActivity {
                 KLog.d("123", msg);
             }
         });
-
     }
 }

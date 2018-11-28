@@ -6,10 +6,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
 /**
  * 简单封装的WebView
+ *
+ * @author pys
  */
 public class SampleWebViewFragment extends Fragment {
 
@@ -49,7 +53,7 @@ public class SampleWebViewFragment extends Fragment {
             }
             SampleWebviewHelper webviewHelper = new SampleWebviewHelper(getWebView())
                     .setWebviewSetting()
-                    .setSampleWebChromeClient()
+                    .setSampleWebChromeClient(new WebChromeClient())
                     //让webview支持下拉刷新
                     .setSampleWebViewClient(refreshWebclient)
                     .loadURL(url);

@@ -87,19 +87,8 @@ public class SampleWebviewHelper {
         return this;
     }
 
-    public SampleWebviewHelper setSampleWebChromeClient() {
-        webView.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public void onReceivedTitle(WebView view, String title) {
-                super.onReceivedTitle(view, title);
-            }
-
-            @Override
-            public void onProgressChanged(WebView view, int newProgress) {
-                super.onProgressChanged(view, newProgress);
-                KLog.d("123", "WebView onProgressChanged:" + newProgress);
-            }
-        });
+    public SampleWebviewHelper setSampleWebChromeClient(WebChromeClient webChromeClient) {
+        webView.setWebChromeClient(webChromeClient);
         return this;
     }
 
@@ -113,8 +102,8 @@ public class SampleWebviewHelper {
         return this;
     }
 
-    /*
-       js 相关
+    /**
+     * js 相关
      */
     public SampleWebviewHelper removeJavascriptInterface(String method) {
         if (webView != null) {
@@ -138,12 +127,13 @@ public class SampleWebviewHelper {
      * @param js
      * @param callback
      */
-    public void callJs(String js, final ValueCallback<String> callback) {
+    public SampleWebviewHelper callJs(String js, final ValueCallback<String> callback) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             webView.evaluateJavascript(js, callback);
         } else {
             webView.loadUrl(js);
         }
+        return this;
     }
 
 }
