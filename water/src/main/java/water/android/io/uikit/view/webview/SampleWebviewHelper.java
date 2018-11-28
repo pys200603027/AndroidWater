@@ -46,12 +46,9 @@ public class SampleWebviewHelper {
         return this;
     }
 
-    public SampleWebviewHelper setCoustomWebViewClient(WebViewClient webViewClient) {
-        webView.setWebViewClient(webViewClient);
-        return this;
-    }
 
-    public SampleWebviewHelper setSampleWebViewClient(WebViewClient webViewClient) {
+
+    public SampleWebviewHelper setRefreshWebViewClient(WebViewClient webViewClient) {
         webView.setWebViewClient(new SampleWebViewClientWapper(webViewClient) {
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -83,12 +80,16 @@ public class SampleWebviewHelper {
                 return super.shouldOverrideUrlLoading(view, request);
             }
         });
-
         return this;
     }
 
-    public SampleWebviewHelper setSampleWebChromeClient(WebChromeClient webChromeClient) {
+    public SampleWebviewHelper setCostomWebChromeClient(WebChromeClient webChromeClient) {
         webView.setWebChromeClient(webChromeClient);
+        return this;
+    }
+
+    public SampleWebviewHelper setCoustomWebViewClient(WebViewClient webViewClient) {
+        webView.setWebViewClient(webViewClient);
         return this;
     }
 

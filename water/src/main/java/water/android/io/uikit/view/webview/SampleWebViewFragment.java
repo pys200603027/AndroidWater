@@ -53,9 +53,9 @@ public class SampleWebViewFragment extends Fragment {
             }
             SampleWebviewHelper webviewHelper = new SampleWebviewHelper(getWebView())
                     .setWebviewSetting()
-                    .setSampleWebChromeClient(new WebChromeClient())
+                    .setCostomWebChromeClient(new WebChromeClient())
                     //让webview支持下拉刷新
-                    .setSampleWebViewClient(refreshWebclient)
+                    .setRefreshWebViewClient(refreshWebclient)
                     .loadURL(url);
 
         } catch (Exception e) {
