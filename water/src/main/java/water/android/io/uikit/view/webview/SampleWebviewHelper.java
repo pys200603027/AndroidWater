@@ -1,5 +1,6 @@
 package water.android.io.uikit.view.webview;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.view.View;
@@ -47,12 +48,14 @@ public class SampleWebviewHelper {
     }
 
 
-
-    public SampleWebviewHelper setRefreshWebViewClient(WebViewClient webViewClient) {
-        webView.setWebViewClient(new SampleWebViewClientWapper(webViewClient) {
+    public SampleWebviewHelper setRefreshWebViewClient(final WebViewClient webViewClient) {
+        webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+                if (webViewClient != null) {
+                    webViewClient.onPageFinished(webView, url);
+                }
                 KLog.d("123", "+WebView onPageFinished");
             }
 
@@ -65,6 +68,9 @@ public class SampleWebviewHelper {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
+                if (webViewClient != null) {
+                    webViewClient.onPageStarted(webView, url, favicon);
+                }
                 KLog.d("123", "+WebView onPageStarted");
             }
 
@@ -114,6 +120,7 @@ public class SampleWebviewHelper {
     }
 
 
+    @SuppressLint("JavascriptInterface")
     public SampleWebviewHelper addJavascriptInterface(Object o, String method) {
         if (webView != null) {
             webView.addJavascriptInterface(o, method);
