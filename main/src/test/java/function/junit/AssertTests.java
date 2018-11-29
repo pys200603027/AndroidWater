@@ -1,4 +1,4 @@
-package junitdemo;
+package function.junit;
 
 import org.hamcrest.core.CombinableMatcher;
 import org.junit.Test;

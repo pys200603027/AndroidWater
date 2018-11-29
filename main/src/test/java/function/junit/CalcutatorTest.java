@@ -1,4 +1,4 @@
-package junitdemo;
+package function.junit;
 
 import org.junit.Test;
 

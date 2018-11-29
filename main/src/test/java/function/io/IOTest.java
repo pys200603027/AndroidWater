@@ -1,4 +1,4 @@
-package io;
+package function.io;
 
 import org.junit.Test;
 

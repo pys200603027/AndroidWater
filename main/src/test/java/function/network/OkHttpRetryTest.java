@@ -1,4 +1,4 @@
-package network;
+package function.network;
 
 import org.junit.Before;
 import org.junit.Test;

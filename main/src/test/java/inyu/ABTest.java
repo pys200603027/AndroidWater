@@ -1,4 +1,4 @@
-package ab;
+package inyu;
 
 import org.junit.Test;
 

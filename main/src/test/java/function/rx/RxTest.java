@@ -1,4 +1,4 @@
-package rx;
+package function.rx;
 
 import org.junit.Test;
 import org.reactivestreams.Publisher;

@@ -1,4 +1,4 @@
-package network;
+package function.network;
 
 import static org.junit.Assert.*;
 

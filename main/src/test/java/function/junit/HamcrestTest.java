@@ -1,4 +1,4 @@
-package junitdemo;
+package function.junit;
 
 import org.hamcrest.Description;
 import org.hamcrest.Factory;
