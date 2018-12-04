@@ -1,11 +1,16 @@
 apply plugin: 'java-library'
+apply plugin: 'net.ltgt.apt-idea' // annotation processor plugin
+apply plugin: 'io.objectbox'
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':liquid')
     testImplementation dependencie.test.junit
     testImplementation dependencie.test.hamcrest
+    implementation "io.objectbox:objectbox-java:$objectboxVersion"
+    annotationProcessor "io.objectbox:objectbox-processor:$objectboxVersion"
 }
+
 
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"

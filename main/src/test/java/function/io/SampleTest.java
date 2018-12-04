@@ -24,7 +24,7 @@ public class SampleTest {
         System.out.println(simpleDateFormat.format(timeLeft));
 
 
-        while(true){
+        while (true) {
             long l = 1571831637000L - System.currentTimeMillis();
             System.out.println(timeFormat(l));
             try {
@@ -91,5 +91,32 @@ public class SampleTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void testStringToInteget() {
+        long time = 1537426606;
+
+        String s = String.valueOf(time);
+
+        System.out.println(s);
+
+    }
+
+    @Test
+    public void removeUnuseString() {
+        String s = "{\"music_body\":\"{\\\"jump_notify\\\": {\\\"path\\\":1}}\",\"extra\":2}";
+        System.out.println(s);
+        if (s.contains("\\")) {
+            s = s.replace("\\", "");
+        }
+        if (s.contains(":\"")) {
+            s = s.replace(":\"", ":");
+        }
+        if (s.contains("}\"")) {
+            s = s.replace("}\"", "}");
+        }
+
+        System.out.println(s);
     }
 }
