@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    apply from:"config.gradle"
+    apply from: "config.gradle"
 
     ext.objectboxVersion = '2.2.0'
     repositories {
@@ -11,6 +11,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'
+        //objectBox
         classpath "net.ltgt.gradle:gradle-apt-plugin:0.15"
         classpath "io.objectbox:objectbox-gradle-plugin:$objectboxVersion"
 
