@@ -1,13 +1,19 @@
 package function.rx;
 
 import org.junit.Test;
-import org.reactivestreams.Publisher;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.concurrent.Callable;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.Single;
 import io.reactivex.SingleEmitter;
 import io.reactivex.SingleOnSubscribe;
 import io.reactivex.SingleSource;
+import io.reactivex.functions.BiConsumer;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
@@ -103,5 +109,40 @@ public class RxTest {
                 System.out.println(s);
             }
         });
+    }
+
+    @Test
+    public void testFrom() {
+        List<String> files = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            files.add(String.valueOf(i));
+        }
+        Observable.fromIterable(files)
+                .map(new Function<String, Integer>() {
+                    @Override
+                    public Integer apply(String s) throws Exception {
+                        Random random = new Random();
+                        int i = Integer.parseInt(s);
+                        i = i + random.nextInt(100);
+                        return i;
+                    }
+                })
+                .collect(new Callable<List<Integer>>() {
+                    @Override
+                    public List<Integer> call() throws Exception {
+                        return new ArrayList<>();
+                    }
+                }, new BiConsumer<List<Integer>, Integer>() {
+                    @Override
+                    public void accept(List<Integer> integers, Integer integer) throws Exception {
+                        integers.add(integer);
+                    }
+                })
+                .subscribe(new Consumer<List<Integer>>() {
+                    @Override
+                    public void accept(List<Integer> integers) throws Exception {
+                        System.out.println(integers);
+                    }
+                });
     }
 }

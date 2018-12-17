@@ -5,10 +5,10 @@ apply plugin: 'io.objectbox'
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':liquid')
-    testImplementation dependencie.test.junit
-    testImplementation dependencie.test.hamcrest
     implementation "io.objectbox:objectbox-java:$objectboxVersion"
     annotationProcessor "io.objectbox:objectbox-processor:$objectboxVersion"
+    implementation dependencie.test.junit
+    implementation dependencie.test.hamcrest
 }
 
 

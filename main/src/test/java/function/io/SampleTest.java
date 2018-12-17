@@ -2,7 +2,12 @@ package function.io;
 
 import org.junit.Test;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
@@ -75,7 +80,7 @@ public class SampleTest {
             @Override
             public void run() {
                 for (int i = 0; i < 100; i++) {
-                    System.out.println("Test aync..");
+                    System.out.println("Test aync.." + i);
                 }
                 try {
                     TimeUnit.SECONDS.sleep(4000);
@@ -119,4 +124,109 @@ public class SampleTest {
 
         System.out.println(s);
     }
+
+    @Test
+    public void testTimeStamp() {
+        Date date = new Date();
+        long timeStamp = date.getTime() / 1000;
+
+        String time = String.valueOf(timeStamp);
+        System.out.println(time);
+
+        System.out.println(time.substring(2, time.length()));
+
+    }
+
+    @Test
+    public void trimTest() {
+        String s = "haha；";
+        String result = "";
+        if (null != s && !"".equals(s)) {
+            result = s.replaceAll("^[　*| *| *|//s*]*", "").replaceAll("[　*| *| *|//s*]*$", "");
+        }
+        System.out.println(result);
+    }
+
+    @Test
+    public void testZero() {
+        System.out.println(0 % 2);
+        System.out.println(1 % 2);
+        System.out.println(2 % 2);
+        System.out.println(3 % 2);
+    }
+
+    class Message {
+        long time;
+        boolean isShowTime = false;
+
+        @Override
+        public String toString() {
+            return time + ",is:" + isShowTime;
+        }
+    }
+
+    @Test
+    public void testPickGroup() {
+        List<Message> data = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            Message message = new Message();
+            if (i < 4) {
+                message.time = i;
+            } else if (i >= 4 && i < 7) {
+                message.time = i + 10;
+            } else {
+                message.time = i + 20;
+            }
+            data.add(message);
+        }
+
+        System.out.println(data);
+
+        //间隔十分钟
+        int timeInterval = 10;
+
+        Message mFlag = data.get(data.size() - 1);
+        for (int i = data.size() - 1; i >= 0; i--) {
+            Message m = data.get(i);
+
+            if (mFlag.time - m.time <= timeInterval) {
+                System.out.println("bingo i:" + i);
+            } else {
+                //标记上一个item显示时间
+                int preIndex = i + 1;
+
+                System.out.println("i:" + i + ",preIndex:" + preIndex);
+
+                //标记下一个待比较数据
+                int nextFlagIndex = i - 1;
+                if (nextFlagIndex < 0) {
+                    nextFlagIndex = 0;
+                }
+                mFlag = data.get(nextFlagIndex);
+            }
+        }
+    }
+
+    /**
+     * 时间格式化 今天，昨天，更早
+     */
+    @Test
+    public void testTimeFormat() throws ParseException {
+        System.out.println(IMTimeFormat(1544430687000L));
+    }
+
+    public static String IMTimeFormat(long time) throws ParseException {
+        Date date = new Date(time);
+        boolean isToday = TimeUtils.isToday(time);
+        int isYeaterday = TimeUtils.isYeaterday(date, null);
+        if (isToday) {
+            return "今天 " + new SimpleDateFormat("ahh:mm").format(date);
+        } else if (isYeaterday == 0) {
+            return "昨天 " + new SimpleDateFormat("ahh:mm").format(date);
+        } else {
+            return new SimpleDateFormat("yyyy/MM/dd").format(date);
+        }
+    }
+
+
 }
