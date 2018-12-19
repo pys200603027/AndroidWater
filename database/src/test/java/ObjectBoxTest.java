@@ -42,7 +42,7 @@ public class ObjectBoxTest {
 
         boxStoreDir = tempFile;
 
-        store= MyObjectBox.builder()
+        store = MyObjectBox.builder()
                 .directory(boxStoreDir)
                 .debugFlags(DebugFlags.LOG_QUERIES | DebugFlags.LOG_QUERY_PARAMETERS)
                 .build();
@@ -58,14 +58,15 @@ public class ObjectBoxTest {
     }
 
     @Test
-    public void testPutAndGet(){
+    public void testPutAndGet() {
         Box<Note> box = store.boxFor(Note.class);
         //保存
         Note note = new Note(0, "zxc", new Date());
+        note.setInnerNote(new Note.InnerNote("inner-Text"));
         box.put(note);
 
-        //
-        System.out.println(box.count() + "notes in ObjectBox database:");
+
+        System.out.println(box.count() + " notes in ObjectBox database:");
         for (Note n : box.getAll()) {
             System.out.println(note);
         }

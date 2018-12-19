@@ -29,6 +29,9 @@ public class User {
     @Index
     private String uid;
 
+    public User() {
+    }
+
     public User(String name) {
         this.name = name;
     }
@@ -70,5 +73,10 @@ public class User {
 
     public void setTempUsageCount(int tempUsageCount) {
         this.tempUsageCount = tempUsageCount;
+    }
+
+    @Override
+    public String toString() {
+        return "id:" + id + ",name:" + name + ",uid:" + uid+",tempUseCount:"+tempUsageCount;
     }
 }
