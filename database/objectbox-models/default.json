@@ -1,0 +1,170 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:7472578778899975905",
+      "lastPropertyId": "7:4624827874284394207",
+      "name": "ChatSession",
+      "properties": [
+        {
+          "id": "1:5115349913137866139",
+          "name": "id"
+        },
+        {
+          "id": "2:8750910661280006442",
+          "name": "last"
+        },
+        {
+          "id": "3:6345642598852269606",
+          "name": "left"
+        },
+        {
+          "id": "4:5033997895256867976",
+          "name": "uid"
+        },
+        {
+          "id": "5:3901802890658624539",
+          "name": "gid"
+        },
+        {
+          "id": "6:2433376183624362440",
+          "name": "fid"
+        },
+        {
+          "id": "7:4624827874284394207",
+          "name": "type"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:2746074253084837701",
+      "lastPropertyId": "4:4180399876685915873",
+      "name": "ChatList",
+      "properties": [
+        {
+          "id": "1:2378711643504593857",
+          "name": "id"
+        },
+        {
+          "id": "2:550934989643216763",
+          "indexId": "1:362573410470674489",
+          "name": "chatSessionId"
+        },
+        {
+          "id": "4:4180399876685915873",
+          "indexId": "5:2232309567701596230",
+          "name": "userId"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:146607166325143402",
+      "lastPropertyId": "3:3345764057233969233",
+      "name": "User",
+      "properties": [
+        {
+          "id": "1:1260414910306778278",
+          "name": "id"
+        },
+        {
+          "id": "2:1783145899765956965",
+          "indexId": "2:564815694834512533",
+          "name": "name"
+        },
+        {
+          "id": "3:3345764057233969233",
+          "indexId": "3:1849914692406635292",
+          "name": "uid"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:5164761119002145576",
+      "lastPropertyId": "3:4750015866986080924",
+      "name": "Note",
+      "properties": [
+        {
+          "id": "1:6131855107454816989",
+          "name": "id"
+        },
+        {
+          "id": "2:6717528123012519354",
+          "name": "text"
+        },
+        {
+          "id": "3:4750015866986080924",
+          "name": "date"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:8314949358051920185",
+      "lastPropertyId": "3:4845107887659356716",
+      "name": "PostUser",
+      "properties": [
+        {
+          "id": "1:900411138472914198",
+          "name": "id"
+        },
+        {
+          "id": "2:7522928892881578763",
+          "name": "name"
+        },
+        {
+          "id": "3:4845107887659356716",
+          "name": "avatar"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "6:5457825605750615864",
+      "lastPropertyId": "5:1876390135070113819",
+      "name": "Session",
+      "properties": [
+        {
+          "id": "1:5956658395606425769",
+          "name": "uid"
+        },
+        {
+          "id": "2:1727374767819767556",
+          "name": "gid"
+        },
+        {
+          "id": "3:65376352919848272",
+          "name": "fid"
+        },
+        {
+          "id": "4:1119951688718227432",
+          "name": "type"
+        },
+        {
+          "id": "5:1876390135070113819",
+          "name": "id"
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "6:5457825605750615864",
+  "lastIndexId": "5:2232309567701596230",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 4,
+  "modelVersionParserMinimum": 4,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [
+    3471830965253324349
+  ],
+  "retiredPropertyUids": [
+    7530929424795358800
+  ],
+  "retiredRelationUids": [],
+  "version": 1
+}

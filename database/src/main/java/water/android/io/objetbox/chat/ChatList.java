@@ -1,18 +1,16 @@
-package water.android.io.objetbox;
+package water.android.io.objetbox.chat;
 
 import io.objectbox.annotation.Entity;
 import io.objectbox.annotation.Id;
 import io.objectbox.relation.ToOne;
 
 @Entity
-public class Order {
+public class ChatList {
 
     @Id
     public long id;
 
-    public ToOne<Customer> customer;
+    public ToOne<ChatSession> chatSession;
 
-    public ToOne<Relation> relation;
-
+    public ToOne<PostUser> user;
 }
-
