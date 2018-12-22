@@ -33,6 +33,6 @@ dependencies {
     androidTestImplementation dependencie.test.runner
     androidTestImplementation dependencie.test.espresso
 
-    implementation project(':apiEyepetizer')
+    implementation project(':api-eyepetizer')
     implementation project(':water')
 }

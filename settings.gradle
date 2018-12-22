@@ -1,1 +1,1 @@
-include ':app', ':water', ':main', ':liquid', ':apiEyepetizer', ':eyepetizer', ':sampledialog', ':objectbox', ':realm'
+include ':app', ':water', ':main', ':liquid', ':api-eyepetizer', ':app-eyepetizer', ':sampledialog', ':objectbox', ':realm'

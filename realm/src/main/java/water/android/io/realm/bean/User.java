@@ -1,4 +1,4 @@
-package water.android.io.realm;
+package water.android.io.realm.bean;
 
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
