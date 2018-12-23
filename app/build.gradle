@@ -25,6 +25,6 @@ dependencies {
     testImplementation dependencie.test.junit
     androidTestImplementation dependencie.test.runner
     androidTestImplementation dependencie.test.espresso
-    implementation project(':water')
+    implementation project(':framework-water')
     implementation project(':main')
 }

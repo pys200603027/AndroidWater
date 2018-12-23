@@ -34,5 +34,5 @@ dependencies {
     androidTestImplementation dependencie.test.espresso
 
     implementation project(':api-eyepetizer')
-    implementation project(':water')
+    implementation project(':framework-water')
 }

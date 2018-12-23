@@ -2,7 +2,7 @@ apply plugin: 'java-library'
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation project(':liquid')
+    implementation project(':framework-liquid')
     testImplementation dependencie.test.junit
     testImplementation dependencie.test.hamcrest
 }

@@ -6,7 +6,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation dependencie.test.junit
     testImplementation dependencie.test.hamcrest
-    implementation project(':liquid')
+    implementation project(':framework-liquid')
 
     // Added automatically by the plugin - just for reference.
     implementation "io.objectbox:objectbox-java:$objectboxVersion"

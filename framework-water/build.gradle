@@ -31,5 +31,5 @@ dependencies {
     api dependencie.utilcode
     api dependencie.klog
     api dependencie.magicindicator
-    api project(':liquid')
+    api project(':framework-liquid')
 }
