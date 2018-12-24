@@ -1,1 +1,1 @@
-include ':app', ':framework-water', ':app-main', ':framework-liquid', ':api-eyepetizer', ':app-eyepetizer', ':ui-sampledialog', ':database-objectbox', ':database-realm', ':ui-widget'
+include ':app', ':framework-water', ':app-main', ':framework-liquid', ':api-eyepetizer', ':app-eyepetizer', ':ui-simpledialog', ':database-objectbox', ':database-realm', ':ui-widget'

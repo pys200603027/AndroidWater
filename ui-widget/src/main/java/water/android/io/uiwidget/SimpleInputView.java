@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ public class SimpleInputView extends RelativeLayout {
 
     private void initView(Context context) {
         LayoutInflater.from(context).inflate(R.layout.im_item_input_view, this);
+        ImageView sendImg = findViewById(R.id.send_img);
         editText = findViewById(R.id.et_input);
         sendView = findViewById(R.id.send);
         sendView.setOnClickListener(new OnClickListener() {
