@@ -1,12 +1,13 @@
 apply plugin: 'com.android.application'
-apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 28
 
+
+
     defaultConfig {
-        applicationId "water.android.io.realm"
-        minSdkVersion 19
+        applicationId "water.android.io.uiwidget"
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -23,8 +24,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
 }
@@ -37,8 +38,4 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
-    implementation dependencie.klog
-    implementation dependencie.rxjava
-    implementation dependencie.rxandroid
 }

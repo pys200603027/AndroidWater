@@ -4,6 +4,9 @@ import com.socks.library.KLog;
 
 import java.util.List;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import water.android.io.realm.bean.chat.ChatDataFactory;
@@ -28,8 +31,28 @@ public class SessionTest {
 
 
                 RealmResults<Session> all = realm.where(Session.class).findAll();
-                KLog.d("123",all);
+                KLog.d("123", all);
             }
         });
+    }
+
+    public static void test2() {
+        Realm.getDefaultInstance()
+                .asFlowable()
+                .map(new Function<Realm, Object>() {
+                    @Override
+                    public Object apply(Realm realm) throws Exception {
+                        KLog.d("123", "CurrentThread :" + Thread.currentThread());
+                        return new Object();
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Object>() {
+
+                    @Override
+                    public void accept(Object o) throws Exception {
+
+                    }
+                });
     }
 }

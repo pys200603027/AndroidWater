@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import water.android.io.realm.bean.UserTest;
 import water.android.io.realm.bean.chat.SessionTest;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,8 +18,16 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        SessionTest.test1();
+        UserTest.test1();
+
+//        UserTest.test2();
+
+//        UserTest.test3();
     }
+
+
+
+
 
 
 }

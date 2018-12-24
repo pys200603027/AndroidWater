@@ -1,12 +1,14 @@
 package function.rx;
 
 import org.junit.Test;
+import org.reactivestreams.Publisher;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Callable;
 
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.Single;
@@ -18,6 +20,7 @@ import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Function3;
+import io.reactivex.schedulers.Schedulers;
 
 public class RxTest {
 
@@ -144,5 +147,46 @@ public class RxTest {
                         System.out.println(integers);
                     }
                 });
+    }
+
+    /**
+     * 测试循环效果
+     */
+    @Test
+    public void testLoop() {
+        Observable.just("")
+                .map(s -> {
+                    for (int i = 0; i < 10; i++) {
+                        Observable.just(i)
+                                .map(i1 -> {
+                                    String s1 = "Loop" + i1;
+                                    return s1;
+                                })
+                                .subscribe(s12 -> System.out.println(s12));
+                    }
+
+                    return new Object();
+                })
+                .subscribe(o -> System.out.println("Consumer"));
+    }
+
+    @Test
+    public void testFlowableFlatMap() {
+
+        Flowable.just("1")
+                .flatMap(new Function<String, Publisher<String>>() {
+                    @Override
+                    public Publisher<String> apply(String s) throws Exception {
+                        Flowable<String> just = Flowable.just("3");
+                        return Flowable.just("2");
+                    }
+                })
+                .subscribe(new Consumer<String>() {
+                    @Override
+                    public void accept(String s) throws Exception {
+
+                    }
+                });
+
     }
 }
