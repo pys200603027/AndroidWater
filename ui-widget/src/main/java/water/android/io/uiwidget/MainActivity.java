@@ -32,7 +32,7 @@ import water.android.io.uiwidget.input.Glide4Engine;
 import water.android.io.uiwidget.input.OnMenuClickListenerWrapper;
 import water.android.io.uiwidget.input.SimpleInputView;
 
-public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
+public class MainActivity extends AppCompatActivity {
 
     private final int RC_PHOTO = 0x0003;
     private CustomInputView inputView;
@@ -42,8 +42,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         HideUtil.init(this);
-        this.mImm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        this.mWindow = getWindow();
 
         inputView = findViewById(R.id.simple_input);
         inputView.setMenuContainerHeight(819);
@@ -67,7 +65,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         menuManager.addCustomMenu("recorder", R.layout.im_menu_voice_item, R.layout.im_menu_voice_feature);
         menuManager.addCustomMenu("photo", R.layout.im_menu_photo_item, R.layout.im_menu_photo_feature);
         // Custom menu order
-        menuManager.setMenu(Menu.newBuilder().
+        menuManager
+                .setMenu(Menu.newBuilder().
                 customize(true).
                 setBottom("recorder", "photo", Menu.TAG_EMOJI).build());
         menuManager.setCustomMenuClickListener(new CustomMenuEventListener() {
@@ -96,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             }
         });
         inputView.setMenuClickListener(new OnMenuClickListenerWrapper());
-        inputView.setOnTouchListener(this);
     }
 
     @Override
@@ -110,41 +108,5 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     public void onBackPressed() {
         super.onBackPressed();
         finish();
-    }
-
-    private InputMethodManager mImm;
-    private Window mWindow;
-
-
-    @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-        switch (motionEvent.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                if (inputView.getMenuState() == View.VISIBLE) {
-                    inputView.dismissMenuLayout();
-                }
-                try {
-                    View v = getCurrentFocus();
-                    if (mImm != null && v != null) {
-                        mImm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                        mWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-                        view.clearFocus();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                break;
-            case MotionEvent.ACTION_UP:
-                view.performClick();
-                break;
-            default:
-        }
-        return false;
-    }
-
-
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
     }
 }
