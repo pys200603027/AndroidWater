@@ -1,4 +1,4 @@
-package water.android.io.uiwidget;
+package water.android.io.uiwidget.input;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -6,10 +6,11 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import water.android.io.uiwidget.R;
 
 /**
  * 聊天简单输入功能
@@ -32,7 +33,6 @@ public class SimpleInputView extends RelativeLayout {
 
     private void initView(Context context) {
         LayoutInflater.from(context).inflate(R.layout.im_item_input_view, this);
-        ImageView sendImg = findViewById(R.id.send_img);
         editText = findViewById(R.id.et_input);
         sendView = findViewById(R.id.send);
         sendView.setOnClickListener(new OnClickListener() {

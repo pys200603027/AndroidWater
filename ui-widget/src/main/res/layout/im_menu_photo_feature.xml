@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cn.jiguang.imui.chatinput.menu.view.MenuFeature xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <com.zhihu.matisse.ui.MatisseView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</cn.jiguang.imui.chatinput.menu.view.MenuFeature>
