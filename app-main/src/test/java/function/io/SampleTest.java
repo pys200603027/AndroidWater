@@ -228,5 +228,30 @@ public class SampleTest {
         }
     }
 
+    /**
+     * 计算比例关系
+     */
+    @Test
+    public void testRatio() {
+        int height = 120;
+        int width = 120;
+
+//        float imageRatio = 16.0f / 9.0f;
+        float imageRatio = 16.0f / 9.0f;
+
+        //长图
+        if (imageRatio > (16.0f / 9.0f)) {
+            height = 540;
+            width = (int) (height / imageRatio);
+        } else if (imageRatio > (3.0f / 4.0f) && imageRatio <= (16.0f / 9.0f)) {
+            height = 540;
+            width = (int) (height / imageRatio);
+        } else {
+            width = 720;
+            height = (int) (width * imageRatio);
+        }
+        System.out.println("123" + "height:" + height + ",width:" + width);
+    }
+
 
 }

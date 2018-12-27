@@ -27,4 +27,5 @@ dependencies {
     androidTestImplementation dependencie.test.espresso
     implementation project(':framework-water')
     implementation project(':app-main')
+    implementation dependencie.glide.glide
 }
