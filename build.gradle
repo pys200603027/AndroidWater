@@ -10,7 +10,7 @@ buildscript {
         maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.android.tools.build:gradle:3.3.0'
         //objectBox
         classpath "net.ltgt.gradle:gradle-apt-plugin:0.15"
         classpath "io.objectbox:objectbox-gradle-plugin:$objectboxVersion"

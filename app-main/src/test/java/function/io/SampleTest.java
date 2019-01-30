@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
@@ -251,6 +252,67 @@ public class SampleTest {
             height = (int) (width * imageRatio);
         }
         System.out.println("123" + "height:" + height + ",width:" + width);
+    }
+
+    @Test
+    public void testRatio2() {
+        float maxDuratio = 60.f;
+        int maxProgress = 220 - 70;
+
+        int x1 = (int) (maxProgress / maxDuratio * 2);
+        System.out.println(x1);
+
+        int x2 = (int) (maxProgress / maxDuratio * 20);
+        System.out.println(x2);
+
+        int x3 = (int) (maxProgress / maxDuratio * 30);
+        System.out.println(x3);
+
+        int x4 = (int) (maxProgress / maxDuratio * 40);
+        System.out.println(x4);
+
+        int x5 = (int) (maxProgress / maxDuratio * 50);
+        System.out.println(x5);
+
+        int x6 = (int) (maxProgress / maxDuratio * 60);
+        System.out.println(x6);
+
+    }
+
+    @Test
+    public void test45() {
+        float f = 10.62f;
+        int i = (int) Math.ceil(f);
+        System.out.println(i);
+
+        double ceil = Math.ceil(0);
+        System.out.println(ceil);
+    }
+
+    @Test
+    public void testSort() {
+        Random random = new Random(24);
+        List<Integer> times = new ArrayList();
+
+        times.add(random.nextInt(100));
+        times.add(random.nextInt(100));
+        times.add(random.nextInt(100));
+        times.add(random.nextInt(100));
+        times.add(random.nextInt(100));
+
+        System.out.println(times);
+
+        for (int i = 0; i < times.size(); i++) {
+            for (int j = 1; j < times.size() - i - 1; j++) {
+                if (times.get(i) < times.get(j)) {
+                    Integer temp = times.get(i);
+                    times.set(i, times.get(j));
+                    times.set(j, temp);
+                }
+            }
+        }
+
+        System.out.println(times);
     }
 
 
