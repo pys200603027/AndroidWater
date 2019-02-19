@@ -3,28 +3,21 @@ package function.rx;
 import org.junit.Test;
 import org.reactivestreams.Publisher;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.Callable;
-
 import io.reactivex.Flowable;
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.Single;
 import io.reactivex.SingleEmitter;
 import io.reactivex.SingleOnSubscribe;
 import io.reactivex.SingleSource;
-import io.reactivex.functions.BiConsumer;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Function3;
-import io.reactivex.schedulers.Schedulers;
 
-public class RxTest {
+public class RxTestTransform {
 
     /**
+     * 类型：变换
      * 测试 contact
      */
     @Test
@@ -42,6 +35,7 @@ public class RxTest {
     }
 
     /**
+     * 类型：变换
      * 测试 contact & just
      */
     @Test
@@ -59,10 +53,12 @@ public class RxTest {
     }
 
     /**
+     * 类型：变换
      * 测试Zip
      */
     @Test
     public void test3() {
+        //字符串
         Single<String> s1 = Single.create(new SingleOnSubscribe<String>() {
             @Override
             public void subscribe(SingleEmitter<String> emitter) throws Exception {
@@ -70,6 +66,7 @@ public class RxTest {
             }
         });
 
+        //Int
         Single<Integer> s2 = Single.create(new SingleOnSubscribe<Integer>() {
             @Override
             public void subscribe(SingleEmitter<Integer> emitter) throws Exception {
@@ -77,6 +74,7 @@ public class RxTest {
             }
         });
 
+        //Int
         Single<Integer> s3 = Single.create(new SingleOnSubscribe<Integer>() {
             @Override
             public void subscribe(SingleEmitter<Integer> emitter) throws Exception {
@@ -84,9 +82,12 @@ public class RxTest {
             }
         });
 
+        //Case 1
+        //String ,Int ,Int -> Object
         Single.zip(s1, s2, s3, new Function3<String, Integer, Integer, Object>() {
             @Override
             public Object apply(String s, Integer integer, Integer integer2) throws Exception {
+                System.out.println(s + integer + integer2);
                 return new Object();
             }
         }).subscribe(new Consumer<Object>() {
@@ -96,6 +97,7 @@ public class RxTest {
             }
         });
 
+        //Case2
         Single.zip(s1, s2, new BiFunction<String, Integer, String>() {
             @Override
             public String apply(String s, Integer integer) throws Exception {
@@ -112,44 +114,20 @@ public class RxTest {
                 System.out.println(s);
             }
         });
-    }
 
-    @Test
-    public void testFrom() {
-        List<String> files = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            files.add(String.valueOf(i));
-        }
-        Observable.fromIterable(files)
-                .map(new Function<String, Integer>() {
+        //Case3
+        Single.concat(s2, s3)
+                .subscribe(new Consumer<Integer>() {
                     @Override
-                    public Integer apply(String s) throws Exception {
-                        Random random = new Random();
-                        int i = Integer.parseInt(s);
-                        i = i + random.nextInt(100);
-                        return i;
-                    }
-                })
-                .collect(new Callable<List<Integer>>() {
-                    @Override
-                    public List<Integer> call() throws Exception {
-                        return new ArrayList<>();
-                    }
-                }, new BiConsumer<List<Integer>, Integer>() {
-                    @Override
-                    public void accept(List<Integer> integers, Integer integer) throws Exception {
-                        integers.add(integer);
-                    }
-                })
-                .subscribe(new Consumer<List<Integer>>() {
-                    @Override
-                    public void accept(List<Integer> integers) throws Exception {
-                        System.out.println(integers);
+                    public void accept(Integer integer) throws Exception {
+                        System.out.println(integer);
                     }
                 });
     }
 
+
     /**
+     * 类型：变换
      * 测试循环效果
      */
     @Test
@@ -170,6 +148,9 @@ public class RxTest {
                 .subscribe(o -> System.out.println("Consumer"));
     }
 
+    /**
+     * 类型：变换
+     */
     @Test
     public void testFlowableFlatMap() {
 
@@ -189,4 +170,10 @@ public class RxTest {
                 });
 
     }
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 }
