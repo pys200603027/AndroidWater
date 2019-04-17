@@ -315,5 +315,75 @@ public class SampleTest {
         System.out.println(times);
     }
 
+    /**
+     * 测试% 计算符号
+     */
+    @Test
+    public void test5() {
+        int index = 1;
+        int count = 5;
+
+        for (int i = 0; i < 10; i++) {
+            int temp = index % count;
+            System.out.println(temp);
+            index++;
+        }
+    }
+
+
+    /**
+     * 测试引用在数组里面的值
+     */
+    @Test
+    public void test6() {
+        class Result {
+            private int count = 0;
+            private String name;
+
+            public int getCount() {
+                return count;
+            }
+
+            public void setCount(int count) {
+                this.count = count;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            @Override
+            public String toString() {
+                return "name:" + name + ",count:" + count;
+            }
+        }
+
+
+        Result result = new Result();
+        result.setCount(0);
+        result.setName("result");
+
+        List<Result> mlist = new ArrayList<>();
+        mlist.add(result);
+        mlist.add(result);
+
+        for (Result r : mlist) {
+            System.out.println(r);
+        }
+
+        Result result1 = mlist.get(0);
+        result1.setName("new Name");
+        result1.setCount(1);
+
+
+        for (Result r : mlist) {
+            System.out.println(r);
+        }
+    }
+
 
 }

@@ -1,7 +1,4 @@
 package function.network;
-
-import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -71,6 +68,7 @@ public class RetrofitTest {
 
     /**
      * 测试Retrofit基本使用
+     * GET
      */
     @Test
     public void test1() {

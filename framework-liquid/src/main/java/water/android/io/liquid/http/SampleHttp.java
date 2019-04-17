@@ -1,12 +1,10 @@
 package water.android.io.liquid.http;
 
-import java.io.IOException;
 import java.util.Map;
 
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -15,21 +13,16 @@ import water.android.io.liquid.utils.Log;
 
 public class SampleHttp {
 
+    private Retrofit retrofit;
+    private OkHttpClient okHttpClient;
+    static SampleHttp sampleHttp;
+
     /**
      * Mozilla/5.0 (Linux; Android 7.0; HUAWEI GRA-CL00 Build/HUAWEIGRA-CL00) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/37.0.0.0 Mobile Safari/537.36
      */
     public static final String SIMULATOR_USER_AGENT = "Mozilla/5.0 (Linux; Android 7.0; HUAWEI GRA-CL00 Build/HUAWEIGRA-CL00) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/37.0.0.0 Mobile Safari/537.36";
+
     private static String baseURL = "";
-
-    public static void init(String baseUrl) {
-        baseURL = baseUrl;
-    }
-
-    public static void init(String baseURL, Map<String, String> headers) {
-
-    }
-
-    static SampleHttp sampleHttp;
 
     private SampleHttp() {
     }
@@ -45,8 +38,14 @@ public class SampleHttp {
         return sampleHttp;
     }
 
-    private Retrofit retrofit;
-    private OkHttpClient okHttpClient;
+
+    public static void init(String baseUrl) {
+        baseURL = baseUrl;
+    }
+
+    public static void init(String baseURL, Map<String, String> headers) {
+
+    }
 
     public Retrofit getRetrofit() {
         return retrofit;
@@ -62,23 +61,31 @@ public class SampleHttp {
 
     public OkHttpClient getDefaultOkHttpClient() {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                /**
+                 * log
+                 */
                 .addInterceptor(getHttpLogInterceptor())
+                /**
+                 * add agent in header
+                 */
                 .addInterceptor(getSimulatorUserAgentInterceptor())
                 .build();
         return okHttpClient;
     }
 
+    /**
+     * User-Agent Interceptor
+     *
+     * @return
+     */
     public static Interceptor getSimulatorUserAgentInterceptor() {
-        Interceptor httpHeaderInterceptor = new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request request = chain.request()
-                        .newBuilder()
-                        .removeHeader("User-Agent")
-                        .addHeader("User-Agent", SIMULATOR_USER_AGENT)
-                        .build();
-                return chain.proceed(request);
-            }
+        Interceptor httpHeaderInterceptor = chain -> {
+            Request request = chain.request()
+                    .newBuilder()
+                    .removeHeader("User-Agent")
+                    .addHeader("User-Agent", SIMULATOR_USER_AGENT)
+                    .build();
+            return chain.proceed(request);
         };
 
         return httpHeaderInterceptor;
@@ -109,8 +116,6 @@ public class SampleHttp {
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
-
-
         return retrofit;
     }
 }

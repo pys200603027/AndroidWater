@@ -5,10 +5,16 @@ import com.google.gson.reflect.TypeToken;
 
 import org.junit.Test;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/*
+    1. 单个对象 Json序列化/反序列化
+    2. 数组
+    3. 范型
+ */
 public class JsonTest {
 
     class Response<T> {
@@ -46,6 +52,7 @@ public class JsonTest {
 
     /**
      * 测试：get/set方法和声明的属性不一致时，是否生成json成功
+     * 结果：(true)json通过反射的方式对属性进行赋予值
      */
     @Test
     public void test1() {
@@ -83,6 +90,9 @@ public class JsonTest {
         urls.add("ccc");
 
         Gson gson = new Gson();
+        /**
+         * 这里接受的是一个Object
+         */
         String s = gson.toJson(urls);
         System.out.println(s);
     }
@@ -130,17 +140,33 @@ public class JsonTest {
     }
 
     /**
-     * 对测试5进行验证
+     * 利用TypeToken进行范型转换
      */
     @Test
     public void test6() {
         String json = "{\"data\":[{\"bday\":\"1999-1-1\",\"nick\":\"nick:0\",\"name\":\"0\"},{\"bday\":\"1999-1-1\",\"nick\":\"nick:1\",\"name\":\"1\"},{\"bday\":\"1999-1-1\",\"nick\":\"nick:2\",\"name\":\"2\"},{\"bday\":\"1999-1-1\",\"nick\":\"nick:3\",\"name\":\"3\"},{\"bday\":\"1999-1-1\",\"nick\":\"nick:4\",\"name\":\"4\"}],\"hasMore\":false}";
 
+        /**
+         * 获取运行时类型
+         */
+        TypeToken typeToken = new TypeToken<Response<List<Person>>>() {
+        };
+        Type type = typeToken.getType();
+
+        /**
+         * STEP 1
+         */
         Gson gson = new Gson();
-        Response<List<Person>> response = gson.fromJson(json, new TypeToken<Response<List<Person>>>() {
-        }.getType());
+        Response<List<Person>> response = gson.fromJson(json, type);
 
         System.out.println(response.hasMore + ",size:" + response.data.size());
+
+        /**
+         * STEP 2
+         * 对于范型来说，传入Type是安全的做法
+         */
+        String finalResul = gson.toJson(response, type);
+        System.out.println(finalResul);
     }
 
 
