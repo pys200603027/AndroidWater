@@ -1,6 +1,7 @@
 package function.rx;
 
 import org.junit.Test;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +17,11 @@ import io.reactivex.Emitter;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
 import io.reactivex.Single;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.BiConsumer;
 import io.reactivex.functions.Consumer;
@@ -363,6 +367,22 @@ public class RxTestCreate {
     @Test
     public void testInterval() throws InterruptedException {
         Observable<Long> clock = Observable.interval(1, TimeUnit.SECONDS);
+
+//        clock.blockingSubscribe(time -> {
+//            /**
+//             * 启动了一个新的线程进行无限计时器
+//             */
+//            System.out.println(Thread.currentThread().getName());
+//            if (time % 2 == 0) {
+//                System.out.println("Tick");
+//            } else {
+//                System.out.println("Tock");
+//            }
+//        });
+
+        /**
+         * subscribe 使用
+         */
         clock.subscribe(time -> {
             /**
              * 启动了一个新的线程进行无限计时器
@@ -374,8 +394,6 @@ public class RxTestCreate {
                 System.out.println("Tock");
             }
         });
-
-
         Thread.sleep(10 * 1000);
     }
 
@@ -445,7 +463,7 @@ public class RxTestCreate {
      * ReactiveX documentation: http://reactivex.io/documentation/operators/empty-never-throw.html
      */
     @Test
-    public void testError2(){
+    public void testError2() {
         Observable<String> observable = Observable.fromCallable(() -> {
             if (Math.random() < 0.5) {
                 throw new IOException();
@@ -467,10 +485,31 @@ public class RxTestCreate {
         });
 
         for (int i = 0; i < 10; i++) {
+            System.out.println("index:" + i);
             result.subscribe(
-                    v -> System.out.println("This should never be printed!"),
-                    error -> error.printStackTrace(),
-                    () -> System.out.println("Done"));
+                    (String v) -> {
+                        System.out.println("This should never be printed!");
+                    },
+                    (Throwable error) -> {
+                        System.out.println("error Throw :" + error);
+//                        error.printStackTrace();
+                    },
+                    () -> {
+                        System.out.println("Done");
+                    });
         }
     }
+
+    /**
+     * 没有subscribe的话，是不会执行emitter中的打印的
+     */
+    @Test
+    public void testCreate2() {
+        Observable.create((ObservableOnSubscribe<String>) emitter -> {
+            System.out.println("Hello RxJava");
+            emitter.onComplete();
+        });
+    }
+
+
 }
