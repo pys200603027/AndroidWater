@@ -4,10 +4,13 @@ import org.junit.Test;
 
 import java.io.File;
 import java.sql.SQLSyntaxErrorException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Random;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -103,5 +106,24 @@ public class IOTest {
         size[1] = Integer.parseInt(split[2]);
 
         System.out.println(size[0] + "," + size[1]);
+    }
+
+    @Test
+    public void testRandomArray() {
+        Random random = new Random();
+        List<Integer> arrays = new ArrayList<>();
+        arrays.add(0);
+
+        for (int n = 0; n < 100; n++) {
+            int i = random.nextInt(arrays.size());
+            System.out.println(i);
+        }
+    }
+
+    @Test
+    public void testEmojLenght() {
+        String s = "你👫好dddddwerer";
+
+        System.out.println(s.length());
     }
 }
